@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1bf103c4-7d22-48d1-a933-62349cb6f7d6" name="Raspberry Pi" url="http://oded.noip.me">
+        <fileTransfer host="oded.noip.me" port="22" rootFolder="/root" accessType="SFTP" password="dfc5dfcedfcfdfcedfdedfcddfd8" username="root">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,16 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="nav navbar-nav pull-left">
+      <li><a href="devices" class="{{'active-link' if active_link == 'devices' }}">Devices</a></li>
+    </div>
+    <div class="nav navbar-nav pull-left {{'active-link' if active_link == 'scheduler' }}">
+      <li><a href="scheduler" class="{{'active-link' if active_link == 'scheduler' }}">Scheduler</a></li>
+    </div>
+    <ul class="nav navbar-nav pull-right">
+      <li><a href="logout">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="error-message"></div>
+<div id="ok-message"></div>

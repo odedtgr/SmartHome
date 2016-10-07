@@ -1,0 +1,43 @@
+<div id="{{device.id}}" class="row" device-type="{{device.type}}">
+    {% if show_device_label %}
+        <div class="col-xs-3 col-lg-2">
+            {{ device.name }}
+        </div>
+    {% endif %}
+	
+    <div class="col-xs-3 col-lg-1 T">
+        {{"T= {} C".format(device.last_config['Temp'])}}
+    </div>
+    <div class="col-xs-3 col-lg-1 RH">
+	{{"RH= {}".format(device.last_config['Rh'])}}
+    </div>
+
+    <div class="col-xs-3 col-lg-1">
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#stats" onclick="setTimeRange(24)">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div id="stats" class="collapse">
+        <script>
+            function setURL(url){
+                document.getElementById('iframe').src = url;
+            }
+        </script>
+        <iframe id="iframe" width="390" height="200" style="border: 1px solid #cccccc;" ></iframe>
+        <div class="btn-group" role="group">
+            <button class="btn-default" onclick="setTimeRange(1)">Hour</button>
+            <button class="btn-default" onclick="setTimeRange(4)">4 Hours</button>
+            <button class="btn-default active" onclick="setTimeRange(24)">Day</button>
+            <button class="btn-default" onclick="setTimeRange(24*7)">Week</button>
+        </div>
+    </div>
+    <script>
+            function setTimeRange(hours) {
+                var now = new Date();
+                now.setHours(now.getHours()- hours);
+                var MyDateString;
+                MyDateString = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2) + '%20' + ('0' + now.getUTCHours()).slice(-2) + ':' + ('0' + (now.getMinutes())).slice(-2) + ':' + ('0' + (now.getSeconds())).slice(-2);
+                setURL("http://api.thingspeak.com/channels/112955/charts/1?width=auto&height=auto&dynamic=true&title=&start="+MyDateString)
+            }
+    </script>
+</div>

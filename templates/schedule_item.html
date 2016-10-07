@@ -1,0 +1,62 @@
+<div class="schedule_item row col-xs-12 col-lg-12" schedule_index="{{ schedule_index }}">
+
+  <!-- device select -->
+  <div class="form-group col-xs-12 col-lg-3">
+    <select class="form-control device" schedule_index="{{ schedule_index }}">
+      {% for device in devices %}
+            <option value="{{ device.id }}" {{ 'selected' if device.id == schedule_item.device_id }}>{{ device.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-xs-12 col-lg-12" style="height:10px;"></div>
+        <!-- device config -->
+  <div class="device_config" schedule_index="{{ schedule_index }}"></div>
+
+  <!-- day select -->
+  <div class="form-group col-xs-12 col-lg-4">
+    <label class="checkbox-inline"><input type="checkbox" value="Sun" {{'checked' if 'Sun' in schedule_item['day'] }}>Sun</label>
+    <label class="checkbox-inline"><input type="checkbox" value="Mon" {{'checked' if 'Mon' in schedule_item['day'] }}>M</label>
+    <label class="checkbox-inline"><input type="checkbox" value="Tue" {{'checked' if 'Tue' in schedule_item['day'] }}>T</label>
+    <label class="checkbox-inline"><input type="checkbox" value="Wed" {{'checked' if 'Wed' in schedule_item['day'] }}>W</label>
+    <label class="checkbox-inline"><input type="checkbox" value="Thu" {{'checked' if 'Thu' in schedule_item['day'] }}>T</label>
+    <label class="checkbox-inline"><input type="checkbox" value="Fri" {{'checked' if 'Fri' in schedule_item['day'] }}>F</label>
+    <label class="checkbox-inline"><input type="checkbox" value="Sat" {{'checked' if 'Sat' in schedule_item['day'] }}>S</label>
+  </div>
+
+  <!-- time select -->
+  <div class="col-xs-5 col-lg-2">
+    <div class="input-group clockpicker" data-placement="bottom" data-autoclose="true">
+        <input type="text" class="form-control col-xs-1 col-lg-1 time-select" value="{{schedule_item.hour}}" readonly="true">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-time"></span>
+        </span>
+    </div>
+  </div>
+
+      <!-- enable/disable button -->
+  <div class="col-xs-4 col-lg-1">
+    <button class="btn {{'btn-primary active' if schedule_item['enabled'] else 'btn-danger'}} task_enabled" onclick="myFunction(this)" value="{{'true' if schedule_item['enabled']}}">{{'Enabled' if schedule_item['enabled'] else 'Disabled'}}</button>
+    <script>
+        function myFunction(elm) {
+                if (elm.innerHTML == "Enabled")
+                {
+                    elm.innerHTML = "Disabled";
+                    elm.value = "false";
+                    $(elm).removeClass("btn-primary").addClass("btn-danger")
+                }
+                else {
+                    elm.innerHTML = "Enabled";
+                    elm.value = "true";
+                    $(elm).removeClass("btn-danger").addClass("btn-primary active")
+                }
+            }
+    </script>
+  </div>
+
+    <!-- remove button -->
+  <div class="col-xs-3 col-lg-1">
+    <button type="button" class="btn btn-danger remove pull-right">Remove</button>
+  </div>
+
+
+</div>

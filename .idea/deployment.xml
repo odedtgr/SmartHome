@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Raspberry Pi">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Raspberry Pi" uploadOnCheckin="41938f3b-46b2-4e58-988c-3875d0e9d76a">
     <serverData>
       <paths name="Raspberry Pi">
         <serverdata>
@@ -10,6 +10,7 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="Raspberry Pi" />
     <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

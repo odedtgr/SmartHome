@@ -27,7 +27,7 @@ class Settings:
             'id':           0,
             'name': 	    'Temperature',
             'type': 	    'temperature',
-            'address':      '\x00\x02',
+            'address':      '\x00\x04',
             'number':       2,
             'last_config':  {'Temp':0}
         },

@@ -117,6 +117,10 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('login', return_to='devices'))
 
+@app.errorhandler(Exception)
+def all_exception_handler(error):
+   pushover_update("Error:", error, "1")
+
 
 def authenticate(username, password):
     if not (password == Settings.users[username]):

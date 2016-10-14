@@ -24,7 +24,7 @@ function device_changed(control) {
     device_type = device_row.attr('device-type');
     device_id = device_row.attr('id');
     if (device_type === 'temperature')
-        return;
+        return;//add attribute for the collapse button .hasClass( "in" )
     else if (device_type === 'shutter' || device_type === 'shutterNew')
         attr = shutter_attr(device_row);
     else if(device_type === 'boiler')

@@ -15,7 +15,7 @@ class Settings:
     THING_SPEAK_KEY = 'GJR2UBQ6G8UDCKQL'
 
     MQTT_BROKER = 'localhost'
-    MQTT_TOPIC = 'HomeWise'
+    MQTT_TOPIC = 'HomeWise/#'
     MQTT_PORT = 1883
 
     RADIO_CLASS	= 'Radio'

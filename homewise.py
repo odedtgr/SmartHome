@@ -149,7 +149,7 @@ device_manager = DeviceManager(Settings.DEVICES,
                                app.logger,
                                radio, socketio)
 scheduler = Scheduler(device_manager.scheduler, Settings, device_manager, app.logger)
-mqtt_client = MQTT(Settings.MQTT_BROKER, Settings.MQTT_PORT, app.logger)
+mqtt_client = MQTT(Settings.MQTT_BROKER, Settings.MQTT_PORT, Settings.MQTT_TOPIC_SUB, app.logger)
 
 
 if __name__ == "__main__":

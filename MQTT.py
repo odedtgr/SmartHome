@@ -4,11 +4,11 @@ import paho.mqtt.client as mqtt
 class MQTT:
 
     @staticmethod
-    def connect_to_broker(client, broker, port):
+    def connect_to_broker(client, broker, topic,  port):
 
         client.connect(broker, port, 60)
-        client.subscribe('HomeWise')
-        print("connected to broker")
+        client.subscribe(topic)
+        print("connected to broker. subscribed to "+str(topic))
         client.loop_forever()
 
     @staticmethod
@@ -21,14 +21,15 @@ class MQTT:
         client.publish(topic,message)
 
 
-    def __init__(self, broker, port, logger):
+    def __init__(self, broker, port, topic_sub, logger):
         self = mqtt.Client()
         self.on_message = MQTT.on_message
         self.broker = broker
         self.port = port
+        self.topic_sub = topic_sub
         self.logger = logger
         self.stop_event = None
-        self.thread =  Thread(target=MQTT.connect_to_broker,args=(self, self.broker, self.port))
+        self.thread =  Thread(target=MQTT.connect_to_broker,args=(self, self.broker, self.topic_sub, self.port))
         self.thread.start()
 
 

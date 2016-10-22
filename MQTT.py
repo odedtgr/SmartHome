@@ -1,5 +1,6 @@
 from threading import Thread
 import paho.mqtt.client as mqtt
+from device_manager import StatusUpdater as StatusUpdater
 
 class MQTT:
 
@@ -14,6 +15,13 @@ class MQTT:
     @staticmethod
     def on_message(self, userdata, msg):
         print(msg.topic+" "+str(msg.payload))
+        device = self.status_updater.get_device_by_address('test_light', 1)
+
+        if device is not None:
+            if device['type'] == 'light':
+                status = {'mode' : msg.payload}
+            if status is not None:
+                self.status_updater.update_device_status(device, status)
 
     def publish_1(client,topic):
         message="MQTT Client started on Raspberry Pi"
@@ -21,7 +29,7 @@ class MQTT:
         client.publish(topic,message)
 
 
-    def __init__(self, broker, port, topic_sub, logger):
+    def __init__(self, broker, port, topic_sub, device_manager, logger):
         self = mqtt.Client()
         self.on_message = MQTT.on_message
         self.broker = broker
@@ -29,7 +37,9 @@ class MQTT:
         self.topic_sub = topic_sub
         self.logger = logger
         self.stop_event = None
+        self.status_updater = StatusUpdater(device_manager)
         self.thread =  Thread(target=MQTT.connect_to_broker,args=(self, self.broker, self.topic_sub, self.port))
         self.thread.start()
 
-
+	def set_status_updater(self, status_updater):
+		self.status_updater = status_updater

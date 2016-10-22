@@ -71,7 +71,17 @@ class Settings:
             'address':      '\x00\x03',
             'number':       1,
             'last_config':  {'mode': '0'}
+        },
+        {
+            'id':           6,
+            'name': 	    'Test Light',
+            'type': 	    'light',
+            'mqtt':         'true',
+            'address':      'test_light',
+            'number':       1,
+            'last_config':  {'mode': ''}
         }
+
     ]
 
     SCHEDULER = [

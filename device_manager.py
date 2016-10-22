@@ -104,8 +104,8 @@ class DeviceManager:
         self.devices_filename = devices_filename
         self.scheduler_filename = scheduler_filename
         self.logger = logger
-        self.radio = radio
         self.socketio = socketio
+        self.radio = radio
         self.radio.set_status_updater(StatusUpdater(self))
         self.radio.set_logger(logger)
         self.load_devices()

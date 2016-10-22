@@ -4,5 +4,9 @@
             {{ device.name }}
         </div>
     {% endif %}
+
+    <div class="col-xs-3 col-lg-1 message">
+        {{"{}".format(device.last_config['mode'])}}
+    </div>
 </div>
 

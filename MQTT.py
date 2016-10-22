@@ -10,7 +10,7 @@ class MQTT:
         client.connect(broker, port, 60)
         client.subscribe(topic)
         print("connected to broker. subscribed to "+str(topic))
-        client.loop_forever()
+        client.loop_start()
 
     @staticmethod
     def on_message(self, userdata, msg):
@@ -38,8 +38,7 @@ class MQTT:
         self.logger = logger
         self.stop_event = None
         self.status_updater = StatusUpdater(device_manager)
-        self.thread =  Thread(target=MQTT.connect_to_broker,args=(self, self.broker, self.topic_sub, self.port))
-        self.thread.start()
+        MQTT.connect_to_broker(self, self.broker, self.topic_sub, self.port)
 
 	def set_status_updater(self, status_updater):
 		self.status_updater = status_updater

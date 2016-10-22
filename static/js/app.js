@@ -41,7 +41,7 @@ function update_device(device_id, attributes) {
         url: 'update_device/' + device_id,
         data: attributes,
         success: success,
-        error: function (XMLHttpRequest, textStatus, errorThrown) { displayErrorMessage(errorThrown); },
+        error: function (XMLHttpRequest, textStatus, errorThrown) { displayErrorMessage(errorThrown); }
     });
 };
 
@@ -51,7 +51,7 @@ function update_scheduler(is_on) {
         type: "POST",
         url: 'update_scheduler/' + is_on,
         success: success,
-        error: function (XMLHttpRequest, textStatus, errorThrown) { displayErrorMessage(errorThrown); },
+        error: function (XMLHttpRequest, textStatus, errorThrown) { displayErrorMessage(errorThrown); }
     });
 };
 

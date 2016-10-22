@@ -15,7 +15,9 @@ class MQTT:
     @staticmethod
     def on_message(self, userdata, msg):
         print(msg.topic+" "+str(msg.payload))
-        device = self.status_updater.get_device_by_address('test_light', 1)
+        slash_pos = msg.topic.index('/')
+        device_address = msg.topic[slash_pos+1:len(msg.topic)]
+        device = self.status_updater.get_device_by_address(device_address, 1)
 
         if device is not None:
             if device['type'] == 'light':

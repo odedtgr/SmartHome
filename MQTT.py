@@ -1,5 +1,5 @@
-from threading import Thread
 import paho.mqtt.client as mqtt
+import json
 from device_manager import StatusUpdater as StatusUpdater
 
 class MQTT:
@@ -26,22 +26,23 @@ class MQTT:
             if status is not None:
                 self.status_updater.update_device_status(device, status)
 
-    def publish_1(client,topic):
+    def publish(self,topic):
         message="MQTT Client started on Raspberry Pi"
         print("publish data")
-        client.publish(topic,message)
+        self.publish(topic,message)
 
 
     def __init__(self, broker, port, topic_sub, device_manager, logger):
-        self = mqtt.Client()
-        self.on_message = MQTT.on_message
+        client = mqtt.Client()
+        client.on_message = MQTT.on_message
+        self.client = client
         self.broker = broker
         self.port = port
         self.topic_sub = topic_sub
         self.logger = logger
         self.stop_event = None
         self.status_updater = StatusUpdater(device_manager)
-        MQTT.connect_to_broker(self, self.broker, self.topic_sub, self.port)
+        MQTT.connect_to_broker(self.client, self.broker, self.topic_sub, self.port)
 
 	def set_status_updater(self, status_updater):
 		self.status_updater = status_updater

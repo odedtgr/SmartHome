@@ -34,6 +34,7 @@ class MQTT:
 
     def __init__(self, broker, port, topic_sub, device_manager, logger):
         client = mqtt.Client()
+        client.status_updater = StatusUpdater(device_manager)
         client.on_message = MQTT.on_message
         self.client = client
         self.broker = broker
@@ -41,7 +42,7 @@ class MQTT:
         self.topic_sub = topic_sub
         self.logger = logger
         self.stop_event = None
-        self.status_updater = StatusUpdater(device_manager)
+
         MQTT.connect_to_broker(self.client, self.broker, self.topic_sub, self.port)
 
 	def set_status_updater(self, status_updater):

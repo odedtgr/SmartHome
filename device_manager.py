@@ -4,6 +4,10 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, ro
 
 
 class DeviceManager:
+    #add an mqtt instance to device manager, used for mqtt.publish
+    def add_mqtt_client(self, mqtt):
+        self.mqtt = mqtt
+
 
     def get_device_by_id(self, device_id):
         for device in self.devices:

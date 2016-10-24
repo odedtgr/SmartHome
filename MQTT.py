@@ -26,10 +26,8 @@ class MQTT:
             if status is not None:
                 self.status_updater.update_device_status(device, status)
 
-    def publish(self,topic):
-        message="MQTT Client started on Raspberry Pi"
-        print("publish data")
-        self.publish(topic,message)
+    def publish(self,topic, payload):
+        self.client.publish(topic,payload)
 
 
     def __init__(self, broker, port, topic_sub, device_manager, logger):
@@ -44,6 +42,8 @@ class MQTT:
         self.stop_event = None
 
         MQTT.connect_to_broker(self.client, self.broker, self.topic_sub, self.port)
+        device_manager.add_mqtt_client(self)
+        #MQTT.publish(self,'HomeWise/out', 'out message')
 
 	def set_status_updater(self, status_updater):
 		self.status_updater = status_updater

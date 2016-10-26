@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import json
+import ast
 from device_manager import StatusUpdater as StatusUpdater
 
 class MQTT:
@@ -22,7 +23,10 @@ class MQTT:
 
         if device is not None:
             if device['type'] == 'light':
-                status = {'mode' : msg.payload}
+                #convert the string to dict
+                status = json.dumps(msg.payload)
+                status = json.loads(status)
+                status = ast.literal_eval(status)
             if status is not None:
                 self.status_updater.update_device_status(device, status)
 

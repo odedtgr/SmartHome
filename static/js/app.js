@@ -37,7 +37,7 @@ function air_conditioner_attr(device_row, on_off_changed) {
 
 function light_attr(device_row, on_off_changed) {
     attributes = new Object();
-    attributes['mode'] = device_row.find('.deviceOn').prop('checked');
+    attributes['device_on'] = !device_row.find('.deviceOn').prop('checked');
     return attributes;
 }
 

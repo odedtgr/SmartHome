@@ -91,7 +91,10 @@ function update_temperature_gui(device_id, status){
 
 function update_light_gui(device_id, status){
     device = document.getElementById(device_id);
-    $(device).find('.message').html(status.mode);
+    if(status.device_on == 'true' || status.on_off == 'True')
+        $(device).find('.deviceOn').prop('checked', true).change()
+    else
+        $(device).find('.deviceOn').prop('checked', false).change()
 }
 
 // refresh every 1 hour to get latest devices status

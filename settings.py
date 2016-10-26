@@ -16,7 +16,7 @@ class Settings:
 
     MQTT_BROKER = 'localhost'
     MQTT_TOPIC_SUB = "HomeWise/#"
-    MQTT_TOPIC_PUB = "HomeWise/out"
+    MQTT_TOPIC_PUB = "HomeWise"
 
     MQTT_PORT = 1883
 
@@ -79,7 +79,7 @@ class Settings:
             'mqtt':         'true',
             'address':      'test_light',
             'number':       1,
-            'last_config':  {'mode': ''}
+            'last_config':  {'device_on': 'false'}
         }
 
     ]

@@ -31,6 +31,8 @@ function device_changed(control) {
         attr = boiler_attr(device_row);
     else if(device_type === 'air_conditioner')
         attr = air_conditioner_attr(device_row, control.find('.deviceOn').attr('val') === 'on_off');
+    else if(device_type === 'light')
+        attr = light_attr(device_row);
     update_device(device_id, attr);
 }
 

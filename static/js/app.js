@@ -26,13 +26,19 @@ function boiler_attr(device_row) {
 }
 
 function air_conditioner_attr(device_row, on_off_changed) {
-attributes = new Object();
+    attributes = new Object();
     attributes['on_off-changed'] = on_off_changed;
     attributes['on_off'] = device_row.find('.deviceOn').prop('checked');
     attributes['fan'] = device_row.find(".btn-group[val='fan'] button.active").attr('val');
     attributes['temp'] = device_row.find('select :selected').val();
     attributes['mode'] = device_row.find(".btn-group[val='mode'] button.active").attr('val');
- return attributes;
+    return attributes;
+}
+
+function light_attr(device_row, on_off_changed) {
+    attributes = new Object();
+    attributes['mode'] = device_row.find('.deviceOn').prop('checked');
+    return attributes;
 }
 
 function update_device(device_id, attributes) {

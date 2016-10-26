@@ -5,6 +5,10 @@
         </div>
     {% endif %}
 
+    <div  class="col-xs-5 col-lg-1 toggle_div">
+        <input class="toggle deviceOn" id="toggle-event" type="checkbox" data-toggle="toggle" data-onstyle="danger" data-offstyle="primary" val="mode" hidden {{'checked' if (device.last_config['mode'] == 'true')}}>
+    </div>
+
     <div class="col-xs-3 col-lg-1 message">
         {{"{}".format(device.last_config['mode'])}}
     </div>

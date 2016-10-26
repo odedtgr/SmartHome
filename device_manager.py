@@ -30,7 +30,11 @@ class DeviceManager:
 
     def update_simple_device(self, device, args):
         device_type = device['type']
-        getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
+        if device['mqtt'] == 'true':
+            topic = self.mqtt.topic_pub
+            self.mqtt.publish(topic, args['mode'])
+        else:
+            getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
         device['last_config'] = args
 
 

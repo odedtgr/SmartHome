@@ -30,7 +30,7 @@ class MQTT:
         self.client.publish(topic,payload)
 
 
-    def __init__(self, broker, port, topic_sub, device_manager, logger):
+    def __init__(self, broker, port, topic_sub, topic_pub, device_manager, logger):
         client = mqtt.Client()
         client.status_updater = StatusUpdater(device_manager)
         client.on_message = MQTT.on_message
@@ -38,6 +38,7 @@ class MQTT:
         self.broker = broker
         self.port = port
         self.topic_sub = topic_sub
+        self.topic_pub = topic_pub
         self.logger = logger
         self.stop_event = None
 

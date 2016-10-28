@@ -16,7 +16,7 @@ class Settings:
 
     MQTT_BROKER = 'localhost'
     MQTT_TOPIC_SUB = "HomeWise/#"
-    MQTT_TOPIC_PUB = "HomeWise"
+    MQTT_TOPIC_PUB = "HomeWise/out"
 
     MQTT_PORT = 1883
 

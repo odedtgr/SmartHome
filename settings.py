@@ -16,7 +16,7 @@ class Settings:
 
     MQTT_BROKER = 'localhost'
     MQTT_TOPIC_SUB = "HomeWise/#"
-    MQTT_TOPIC_PUB = "HomeWise"
+    MQTT_TOPIC_PUB = "HomeWise/out"
 
     MQTT_PORT = 1883
 
@@ -71,7 +71,17 @@ class Settings:
             'address':      '\x00\x03',
             'number':       1,
             'last_config':  {'mode': '0'}
+        },
+        {
+            'id':           6,
+            'name': 	    'Test Light',
+            'type': 	    'light',
+            'mqtt':         'true',
+            'address':      'test_light',
+            'number':       1,
+            'last_config':  {'device_on': 'false'}
         }
+
     ]
 
     SCHEDULER = [

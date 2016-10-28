@@ -1,9 +1,14 @@
 import os
 import pickle
+import json
 from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect
 
 
 class DeviceManager:
+    #add an mqtt instance to device manager, used for mqtt.publish
+    def add_mqtt_client(self, mqtt):
+        self.mqtt = mqtt
+
 
     def get_device_by_id(self, device_id):
         for device in self.devices:
@@ -26,7 +31,17 @@ class DeviceManager:
 
     def update_simple_device(self, device, args):
         device_type = device['type']
-        getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
+        #works for MQTT or XBee device according to the 'mqtt' setting.
+        if 'mqtt' in device:
+            if device['mqtt'] == 'true':
+                topic = self.mqtt.topic_pub
+                topic = topic + '/' + device['address']
+                args_json_str = json.dumps(args)
+                self.mqtt.publish(topic, args_json_str)
+            else:
+                getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
+        else:
+            getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
         device['last_config'] = args
 
 
@@ -104,8 +119,8 @@ class DeviceManager:
         self.devices_filename = devices_filename
         self.scheduler_filename = scheduler_filename
         self.logger = logger
-        self.radio = radio
         self.socketio = socketio
+        self.radio = radio
         self.radio.set_status_updater(StatusUpdater(self))
         self.radio.set_logger(logger)
         self.load_devices()

@@ -31,6 +31,8 @@ function device_changed(control) {
         attr = boiler_attr(device_row);
     else if(device_type === 'air_conditioner')
         attr = air_conditioner_attr(device_row, control.find('.deviceOn').attr('val') === 'on_off');
+    else if(device_type === 'light')
+        attr = light_attr(device_row);
     update_device(device_id, attr);
 }
 
@@ -44,6 +46,8 @@ function update_device_gui(device, status){
         update_shutter_gui(device.id, status);
     else if(device.type == 'temperature')
         update_temperature_gui(device.id, status);
+    else if(device.type == 'light')
+        update_light_gui(device.id, status);
 }
 
 function update_boiler_gui(device_id, status){
@@ -83,6 +87,14 @@ function update_temperature_gui(device_id, status){
     device = document.getElementById(device_id);
     $(device).find('.T').html("T= "+status.Temp+" C");
     $(device).find('.RH').html("RH= "+status.Rh);
+}
+
+function update_light_gui(device_id, status){
+    device = document.getElementById(device_id);
+    if(status.device_on == 'true' || status.on_off == 'True')
+        $(device).find('.deviceOn').prop('checked', true).change()
+    else
+        $(device).find('.deviceOn').prop('checked', false).change()
 }
 
 // refresh every 1 hour to get latest devices status

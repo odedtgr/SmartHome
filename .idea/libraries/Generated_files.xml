@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/static/js/devices.min.js" />
+        <item url="file://$PROJECT_DIR$/static/js/scheduler.min.js" />
+        <item url="file://$PROJECT_DIR$/static/js/stay.standalone.min.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/static/js/devices.min.js" />
+      <root url="file://$PROJECT_DIR$/static/js/scheduler.min.js" />
+      <root url="file://$PROJECT_DIR$/static/js/stay.standalone.min.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

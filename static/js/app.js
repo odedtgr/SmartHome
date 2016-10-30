@@ -19,6 +19,7 @@ function shutter_attr(device_row) {
     return attributes;
 }
 
+
 function boiler_attr(device_row) {
     attributes = new Object();
     attributes['mode'] = device_row.find('.btn-group').find('button.active').attr('val');

@@ -117,6 +117,9 @@ class Radio:
 			options='\x00',
 			data=(chr(device_number)+data))
 
+	def update_temperature(self, addr, device_number, args):
+		data = 0
+
 
 	def update_air_conditioner(self, addr, device_number, args):
 		data = calc_ac_message(args, self.logger)

@@ -13,10 +13,11 @@
     </div>
 
     <div class="col-xs-3 col-lg-1">
-        <button class="btn btn-primary" data-toggle="collapse" data-target="#stats" onclick="setTimeRange(24)">
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#stats" onclick="setTimeRange({{device.last_config['timeRange']}})">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
         </button>
     </div>
+    <!--<div id="stats" class="collapse {{'in' if (device.last_config['visible'] == 'false')}}">-->
     <div id="stats" class="collapse">
         <script>
             function setURL(url){
@@ -38,6 +39,12 @@
                 var MyDateString;
                 MyDateString = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2) + '%20' + ('0' + now.getUTCHours()).slice(-2) + ':' + ('0' + (now.getMinutes())).slice(-2) + ':' + ('0' + (now.getSeconds())).slice(-2);
                 setURL("http://api.thingspeak.com/channels/112955/charts/1?width=auto&height=auto&dynamic=true&title=&start="+MyDateString)
+
+                //update the device config to server memory for reload.
+                attributes = new Object();
+                attributes['visible'] = $( "#{{device.id}}" ).find('.collapse').hasClass( "in" );
+                attributes['timeRange'] = hours;
+                update_device({{ device.id }}, attributes);
             }
     </script>
 </div>

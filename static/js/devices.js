@@ -12,6 +12,7 @@ $('.toggle_div').on('click', function(event, state) {
 $('button').on('click', function() {
     $(this).closest('.btn-group').find('button').removeClass('active')
     $(this).addClass('active');
+    $(this).removeClass('btn-primary').addClass('btn-alert');
     //scheduler general on-off button on devices window
     if ($(this).parent('.btn-group').attr('val') === 'scheduler')
         update_scheduler($(this).attr('val') === 'true');
@@ -72,6 +73,7 @@ function update_air_conditioner_gui(device_id, status){
 function update_shutter_gui(device_id, status){
     device = document.getElementById(device_id);
     $(device).find('.btn-group').find('button').removeClass('active');
+    $(device).find('.btn-group').find('button').removeClass('btn-alert').addClass('btn-primary')
     if(status.mode == 0 || status.mode == 25 || status.mode == 50 || status.mode == 75 || status.mode == 100) {
         $(device).find('.status').html("");
         $(device).find("[val=" + status.mode + "]").addClass('active');

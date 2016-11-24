@@ -12,7 +12,6 @@ $('.toggle_div').on('click', function(event, state) {
 $('button').on('click', function() {
     $(this).closest('.btn-group').find('button').removeClass('active')
     $(this).addClass('active');
-    $(this).removeClass('btn-primary').addClass('btn-alert');
     //scheduler general on-off button on devices window
     if ($(this).parent('.btn-group').attr('val') === 'scheduler')
         update_scheduler($(this).attr('val') === 'true');
@@ -26,8 +25,10 @@ function device_changed(control) {
     device_id = device_row.attr('id');
     if (device_type === 'temperature')
         return;//add attribute for the collapse button .hasClass( "in" )
-    else if (device_type === 'shutter' || device_type === 'shutterNew')
+    else if (device_type === 'shutter' || device_type === 'shutterNew') {
+        control.removeClass('btn-primary').addClass('btn-alert');
         attr = shutter_attr(device_row);
+    }
     else if(device_type === 'boiler')
         attr = boiler_attr(device_row);
     else if(device_type === 'air_conditioner')

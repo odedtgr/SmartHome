@@ -12,6 +12,9 @@
             <button type="button" class="btn btn-alert {{'active' if (device.last_config['mode'] == '2' or device.last_config['mode'] == '3')}}" aria-label="3" val="3">On</button>
         </div>
     </div>
+    <div class="col-xs-12 col-lg-2">
+        {{ device.last_config['start_time'] }}
+    </div>
 </div>
 
     

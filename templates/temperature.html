@@ -1,15 +1,15 @@
 <div id="{{device.id}}" class="row" device-type="{{device.type}}">
     {% if show_device_label %}
-        <div class="col-xs-3 col-lg-2">
-            {{ device.name }}
-        </div>
+    <div class="col-xs-3 col-lg-2">
+        {{ device.name }}
+    </div>
     {% endif %}
-	
+
     <div class="col-xs-3 col-lg-1 T">
         {{"T= {} C".format(device.last_config['Temp'])}}
     </div>
     <div class="col-xs-3 col-lg-1 RH">
-	{{"RH= {}".format(device.last_config['Rh'])}}
+        {{"RH= {}".format(device.last_config['Rh'])}}
     </div>
 
     <div class="col-xs-3 col-lg-1">
@@ -33,18 +33,18 @@
         </div>
     </div>
     <script>
-            function setTimeRange(hours) {
-                var now = new Date();
-                now.setHours(now.getHours()- hours);
-                var MyDateString;
-                MyDateString = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2) + '%20' + ('0' + now.getUTCHours()).slice(-2) + ':' + ('0' + (now.getMinutes())).slice(-2) + ':' + ('0' + (now.getSeconds())).slice(-2);
-                setURL("http://api.thingspeak.com/channels/112955/charts/1?width=auto&height=auto&dynamic=true&title=&start="+MyDateString)
+        function setTimeRange(hours) {
+            var now = new Date();
+            now.setHours(now.getHours()- hours);
+            var MyDateString;
+            MyDateString = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2) + '%20' + ('0' + now.getUTCHours()).slice(-2) + ':' + ('0' + (now.getMinutes())).slice(-2) + ':' + ('0' + (now.getSeconds())).slice(-2);
+            setURL("http://api.thingspeak.com/channels/112955/charts/1?width=auto&height=auto&dynamic=true&title=&start="+MyDateString)
 
-                //update the device config to server memory for reload.
-                attributes = new Object();
-                attributes['visible'] = $( "#{{device.id}}" ).find('.collapse').hasClass( "in" );
-                attributes['timeRange'] = hours;
-                update_device({{ device.id }}, attributes);
-            }
+            //update the device config to server memory for reload.
+            attributes = new Object();
+            attributes['visible'] = $( "#{{device.id}}" ).find('.collapse').hasClass( "in" );
+            attributes['timeRange'] = hours;
+            update_device({{ device.id }}, attributes);
+        }
     </script>
 </div>

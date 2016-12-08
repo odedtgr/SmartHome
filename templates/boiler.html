@@ -1,20 +1,23 @@
 <div id="{{device.id}}" class="row" device-type="{{device.type}}">
     {% if show_device_label %}
-        <div class="col-xs-12 col-lg-2">
-            {{ device.name }}
-        </div>
+    <div class="col-xs-12 col-lg-2">
+        {{ device.name }}
+    </div>
     {% endif %}
 
-    <div class="col-xs-8">
+    <div class="col-xs-6 col-lg-2">
         <div class="btn-group" role="group" aria-label="Mode" val="mode">
             <button type="button" class="btn btn-primary {{'active' if (device.last_config['mode'] == '0' or device.last_config['mode'] == '4')}}" aria-label="4" val="4">Off</button>
             <button type="button" class="btn btn-alert {{'active' if device.last_config['mode'] == '1'}}" aria-label="1" val="1">Auto</button>
             <button type="button" class="btn btn-alert {{'active' if (device.last_config['mode'] == '2' or device.last_config['mode'] == '3')}}" aria-label="3" val="3">On</button>
         </div>
     </div>
-    <div class="col-xs-12 col-lg-2">
-        {{ device.last_config['start_time'] }}
+
+    <div class="col-xs-5 col-lg-3">
+        {{"Started on {}".format(device.last_config['time']) if (device.last_config['mode'] != '0')}}
+        {{"Stopped on {}".format(device.last_config['time']) if (device.last_config['mode'] == '0')}}
     </div>
+
 </div>
 
     

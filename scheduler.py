@@ -56,7 +56,6 @@ class Scheduler:
         if len(scheduler) > 0:
             self.logger.info("Starting Scheduler...")
             self.stop_event = Event()
-            self.thread = Thread(
-                        target = Scheduler.threaded_function,
-                        args = [scheduler, self.scheduler_on, self.device_manager, self.logger, self.stop_event])
+            self.thread = Thread(target = Scheduler.threaded_function,
+                                 args = [scheduler, self.scheduler_on, self.device_manager, self.logger, self.stop_event])
             self.thread.start()

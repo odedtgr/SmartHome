@@ -9,31 +9,29 @@ def calc_ac_message(args, logger):
     message = '111000' # prefix
     message += ('01' if args['on_off-changed'] == 'true' else '10') # on_off
     message += ('101001' if args['mode'] == 'cool' else '100110') # mode
-    fan_options = {
-    '1': '1010',
-    '2': '1001',
-    '3': '0110',
-    'A': '0101'
-    }
+    fan_options = {'1': '1010',
+                   '2': '1001',
+                   '3': '0110',
+                   'A': '0101'
+                   }
     message += fan_options[args['fan']] # fan
     message += '1010101010'
-    temp_options = {
-    '16': '10101001',
-    '17': '10100110',
-    '18': '10100101',
-    '19': '10011010',
-    '20': '10011001',
-    '21': '10010110',
-    '22': '10010101',
-    '23': '01101010',
-    '24': '01101001',
-    '25': '01100110',
-    '26': '01100101',
-    '27': '01011010',
-    '28': '01011001',
-    '29': '01010110',
-    '30': '01010101'
-    }
+    temp_options = {'16': '10101001',
+                    '17': '10100110',
+                    '18': '10100101',
+                    '19': '10011010',
+                    '20': '10011001',
+                    '21': '10010110',
+                    '22': '10010101',
+                    '23': '01101010',
+                    '24': '01101001',
+                    '25': '01100110',
+                    '26': '01100101',
+                    '27': '01011010',
+                    '28': '01011001',
+                    '29': '01010110',
+                    '30': '01010101'
+                    }
     message += temp_options[args['temp']] #temp
     message += '10101010101010101010101010101010100110'
     message += message + message
@@ -72,7 +70,14 @@ class Radio:
                     status = {'Temp' : str(temperature), 'Rh' : str(rh)}
                     ThingSpeak_update(temperature, rh)
                 if device['type'] == 'boiler':
-                    status = {'mode' : str(ord(data['rf_data'][1]))}
+                    now = datetime.datetime.now()
+                    date = datetime.datetime.today().strftime('%Y-%m-%d')
+                    curr_hour = "{}:{}".format(str(now.hour).zfill(2), str(now.minute).zfill(2))
+                    mode = ord(data['rf_data'][1])
+                    status = {'mode' : str(mode),
+                              'time' : curr_hour,
+                              'date' : date
+                              }
                 if device['type'] == 'air_conditioner':
                     status = {'on_off' : ('false' if data['rf_data'][1] == '\x01' else 'true') }
                 if status is not None:
@@ -84,14 +89,13 @@ class Radio:
 
 
     def update_shutter(self, addr, device_number, args):
-        shutter_options = {
-        '100': '\x01',
-        '0': '\x02',
-        'pause': '\x03',
-        '25': '\x04',
-        '50': '\x05',
-        '75': '\x06',
-        }
+        shutter_options = {'100': '\x01',
+                           '0': '\x02',
+                           'pause': '\x03',
+                           '25': '\x04',
+                           '50': '\x05',
+                           '75': '\x06',
+                           }
         data = shutter_options[args['mode']]
         self.xbee.send('tx',
                        frame_id='A',

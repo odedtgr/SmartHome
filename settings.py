@@ -33,7 +33,7 @@ class Settings:
             'number':       2,
             'last_config':  {'Temp':0}
         },
-	{
+	    {
             'id':           1,
             'name': 	    'Living Room Shutter',
             'type': 	    'shutter',
@@ -41,7 +41,7 @@ class Settings:
             'number':       1,
             'last_config':  {'mode': '100'}
         },
-	{
+	    {
             'id':           2,
             'name': 	    'Bedroom Shutter',
             'type': 	    'shutterNew',
@@ -80,6 +80,14 @@ class Settings:
             'address':      'test_light',
             'number':       1,
             'last_config':  {'device_on': 'false'}
+        },
+        {
+            'id':           7,
+            'name': 	    'Test Shutter',
+            'type': 	    'shutter',
+            'address':      '\x00\x02',
+            'number':       1,
+            'last_config':  {'mode': '100'}
         }
 
     ]

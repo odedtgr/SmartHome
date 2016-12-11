@@ -14,11 +14,30 @@
     </div>
 
     <div class="col-xs-5 col-lg-3">
-        {{"Started on {}".format(device.last_config['time']) if (device.last_config['mode'] != '0')}}
-        {{"Stopped on {}".format(device.last_config['time']) if (device.last_config['mode'] == '0')}}
-    </div>
-
-</div>
+        <script>
+            //Display the time the water heater was on, but only if it was today.
+            var today = new Date().toJSON().slice(0,10);
+            var yesterday = new Date();
+            yesterday.setDate(yesterday.getDate()-1);
+            yesterday = yesterday.getFullYear() + '-' + ('0' + (yesterday.getMonth()+1)).slice(-2) + '-' + ('0' + yesterday.getDate()).slice(-2);
+            var boiler_date = '{{device.last_config['date']}}'
+            var mode = {{device.last_config['mode']}}
+            if (today.localeCompare(boiler_date)==0)
+            {
+                if (mode == 0){
+                    document.write('{{"Last on at {}".format(device.last_config['time'])}}')
+                }else{
+                    document.write('{{"Started on {}".format(device.last_config['time'])}}')
+                }
+            }
+            else if (yesterday.localeCompare(boiler_date)==0)
+            {
+                if (mode == 0){
+                    document.write('{{"Last on yesterday at {}".format(device.last_config['time'])}}')
+                }
+            }
+        </script>
+    </div></div>
 
     
 

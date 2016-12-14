@@ -84,7 +84,7 @@ class Settings:
         {
             'id':           7,
             'name': 	    'Test Shutter',
-            'type': 	    'shutter',
+            'type': 	    'shutterNew',
             'address':      '\x00\x02',
             'number':       1,
             'last_config':  {'mode': '100'}

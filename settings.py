@@ -74,22 +74,21 @@ class Settings:
         },
         {
             'id':           6,
+            'name': 	    'Twins room Shutter',
+            'type': 	    'shutterNew',
+            'address':      '\x00\x02',
+            'number':       1,
+            'last_config':  {'mode': '100'}
+        },
+        {
+            'id':           7,
             'name': 	    'Test Light',
             'type': 	    'light',
             'mqtt':         'true',
             'address':      'test_light',
             'number':       1,
             'last_config':  {'device_on': 'false'}
-        },
-        {
-            'id':           7,
-            'name': 	    'Test Shutter',
-            'type': 	    'shutterNew',
-            'address':      '\x00\x02',
-            'number':       1,
-            'last_config':  {'mode': '100'}
         }
-
     ]
 
     SCHEDULER = [

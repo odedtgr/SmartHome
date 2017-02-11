@@ -18,7 +18,8 @@ class Scheduler:
                         logger.info("[{}] - Executing Schedule task...{}".format(str(datetime.datetime.now()), task))
                         device_type=device_manager.devices[task['device_id']]['type']
                         if device_type == 'air_conditioner':
-                            if task['config']['on_off']!=device_manager.devices[task['device_id']]['last_config']['on_off']:
+                            ac_on = device_manager.devices[task['device_id']]['last_config']['on_off']=='true'
+                            if task['config']['on_off']!=ac_on:
                                 task['config']['on_off-changed'] = unicode('true', "utf-8")
                             else:
                                 task['config']['on_off-changed'] = unicode('false', "utf-8")

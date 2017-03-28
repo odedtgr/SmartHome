@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import logging
-import sys
+import sys, os
 import json
 from threading import Thread
 from flask import Flask, render_template, request, session, redirect, url_for, flash
@@ -155,6 +155,9 @@ scheduler = Scheduler(device_manager.scheduler, Settings, device_manager, app.lo
 
 if __name__ == "__main__":
     pushover_update("HomeWise","Up and running","0")
-    socketio.run(app, host=Settings.HOST, port=Settings.PORT, debug=Settings.DEBUG, use_reloader=False)
-
+    try:
+        socketio.run(app, host=Settings.HOST, port=Settings.PORT, debug=Settings.DEBUG, use_reloader=False)
+    except :
+        pushover_update("Allready runnung", "0")
+        os._exit(1)
 radio.close()

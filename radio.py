@@ -1,4 +1,4 @@
-import serial
+import serial, sys
 import datetime
 from xbee import XBee
 from thing_speak import *

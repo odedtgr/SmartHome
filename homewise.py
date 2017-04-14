@@ -41,20 +41,20 @@ def scheduler():
 def update_device_websoc(message):
     if not is_loggedin():
         return redirect(url_for('login'))
-    device_manager.update_device(int(message['device_id']), message['data'])
+    device_manager.update_device(int(message['device_id']), message['data'], True)
 
 @app.route("/update_device/<int:device_id>", methods=['GET', 'POST'])
 def update_device(device_id):
     if not is_loggedin():
         return redirect(url_for('login', return_to='devices'))
-    device_manager.update_device(device_id, request.form)
+    device_manager.update_device(device_id, request.form, True)
     return json.dumps({'succeeded': True})
 
 @app.route("/api/update_device/<username>/<password>/<int:device_id>")
 def api_update_device(username, password, device_id):
     try:
         authenticate(username, password)
-        device = device_manager.update_device(device_id, request.args)
+        device = device_manager.update_device(device_id, request.args, True)
         return render_template('api_ok.html', device_name=device['name'])
     except Exception, ex:
         return render_template('api_error.html', error_message=str(ex))

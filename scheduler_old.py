@@ -17,7 +17,7 @@ class Scheduler:
             for task in scheduler:
                 if 1:
                     logger.info("[{}] - Executing Schedule task...{}".format(str(datetime.datetime.now()), task))
-                    device_manager.update_device(task['device_id'], task['config'])
+                    device_manager.update_device(task['device_id'], task['config'], True)
             next_tasks_hours = [h for h in hours if h > curr_hour]
             next_loop_time = next_tasks_hours[0] if len(next_tasks_hours) > 0 else hours[0]
             sleep_period = (datetime.datetime(2000, 1, 1, int(next_loop_time[:2]), int(next_loop_time[-2:]), 1) -

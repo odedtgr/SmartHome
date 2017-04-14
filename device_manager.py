@@ -90,7 +90,7 @@ class DeviceManager:
         f.close()
 
 
-    def update_device(self, device_id, args):
+    def update_device(self, device_id, args, save_devices):
         device = self.get_device_by_id(device_id)
         if self.is_group_device(device):
             for simple_device in self.get_devices_by_type(device['type']):
@@ -98,7 +98,8 @@ class DeviceManager:
             device['last_config'] = args
         else:
             self.update_simple_device(device, args)
-        self.save_devices()
+        if save_devices:
+            self.save_devices()
         return device
 
 

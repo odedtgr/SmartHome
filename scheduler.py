@@ -23,7 +23,7 @@ class Scheduler:
                                 task['config']['on_off-changed'] = unicode('true', "utf-8")
                             else:
                                 task['config']['on_off-changed'] = unicode('false', "utf-8")
-                        device_manager.update_device(task['device_id'], task['config'])
+                        device_manager.update_device(task['device_id'], task['config'], False)
 
             next_tasks_hours = [h for h in hours if h > curr_hour]
             next_loop_time = next_tasks_hours[0] if len(next_tasks_hours) > 0 else hours[0]

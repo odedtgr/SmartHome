@@ -56,13 +56,14 @@ function update_device_gui(device, status){
 
 function update_boiler_gui(device_id, status){
     device = document.getElementById(device_id);
+    $(device).find('.T').html("T= "+status.Temp+" C");
     $(device).find('.btn-group').find('button').removeClass('active');
-    if(status.mode == 0 || status.mode == 4)
+    if(status.mode == 0)
+        $(device).find("[val=0]").addClass('active');
+    else if(status.mode == 3 || status.mode == 4 || status.mode == 5)
         $(device).find("[val=4]").addClass('active');
-    else if(status.mode == 1)
-        $(device).find("[val=1]").addClass('active');
     else
-        $(device).find("[val=3]").addClass('active');
+        $(device).find("[val=2]").addClass('active');
 }
 
 function update_air_conditioner_gui(device_id, status){

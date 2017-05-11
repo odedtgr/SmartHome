@@ -69,11 +69,6 @@ class Radio:
                     rh = float(ord(data['rf_data'][3])*256+ord(data['rf_data'][4]))/10
                     status = {'Temp' : str(temperature), 'Rh' : str(rh)}
                     ThingSpeak_update_DHT22(temperature, rh)
-                if device['type'] == 'boiler_temperature':
-                    temperature = float((ord(data['rf_data'][2]) << 8) | (ord(data['rf_data'][1]) << 0)) / float(256)
-                    #device = self.status_updater.get_device_by_address(data['source_addr'], 1)
-                    status = {'Temp': str(temperature)}
-                    ThingSpeak_update_DS18B20(temperature)
                 if device['type'] == 'boiler':
                     now = datetime.datetime.now()
                     date = datetime.datetime.today().strftime('%Y-%m-%d')
@@ -83,6 +78,11 @@ class Radio:
                               'time' : curr_hour,
                               'date' : date
                               }
+                if device['type'] == 'boiler_temperature':
+                    temperature = float((ord(data['rf_data'][2]) << 8) | (ord(data['rf_data'][1]) << 0)) / float(256)
+                    device = self.status_updater.get_device_by_address(data['source_addr'], 1)
+                    status = {'Temp': str(temperature)}
+                    ThingSpeak_update_DS18B20(temperature)
                 if device['type'] == 'air_conditioner':
                     status = {'on_off' : ('false' if data['rf_data'][1] == '\x01' else 'true') }
                 if status is not None:

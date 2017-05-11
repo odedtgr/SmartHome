@@ -50,6 +50,8 @@ function update_device_gui(device, status){
         update_temperature_gui(device.id, status);
     else if(device.type == 'light')
         update_light_gui(device.id, status);
+    else if(device.type == 'boiler_temperature')
+        update_bolier_temperature_gui(device.id, status);
 }
 
 function update_boiler_gui(device_id, status){
@@ -90,6 +92,11 @@ function update_temperature_gui(device_id, status){
     device = document.getElementById(device_id);
     $(device).find('.T').html("T= "+status.Temp+" C");
     $(device).find('.RH').html("RH= "+status.Rh);
+}
+
+function update_bolier_temperature_gui(device_id, status){
+    device = document.getElementById(device_id);
+    $(device).find('.T').html("T= "+status.Temp+" C");
 }
 
 function update_light_gui(device_id, status){

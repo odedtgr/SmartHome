@@ -42,6 +42,7 @@
 
                 //update the device config to server memory for reload.
                 attributes = new Object();
+                while($( "#{{device.id}}" ).find('.collapse').hasClass( "collapsing" ));
                 attributes['visible'] = $( "#{{device.id}}" ).find('.collapse').hasClass( "in" );
                 attributes['timeRange'] = hours;
                 update_device({{ device.id }}, attributes);

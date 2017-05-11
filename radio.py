@@ -68,7 +68,12 @@ class Radio:
                     temperature = float(ord(data['rf_data'][1])*256+ord(data['rf_data'][2]))/10
                     rh = float(ord(data['rf_data'][3])*256+ord(data['rf_data'][4]))/10
                     status = {'Temp' : str(temperature), 'Rh' : str(rh)}
-                    ThingSpeak_update(temperature, rh)
+                    ThingSpeak_update_DHT22(temperature, rh)
+                if device['type'] == 'boiler_temperature':
+                    temperature = float((ord(data['rf_data'][2]) << 8) | (ord(data['rf_data'][1]) << 0)) / float(256)
+                    #device = self.status_updater.get_device_by_address(data['source_addr'], 1)
+                    status = {'Temp': str(temperature)}
+                    ThingSpeak_update_DS18B20(temperature)
                 if device['type'] == 'boiler':
                     now = datetime.datetime.now()
                     date = datetime.datetime.today().strftime('%Y-%m-%d')
@@ -123,6 +128,8 @@ class Radio:
     def update_temperature(self, addr, device_number, args):
         data = 0
 
+    def update_boiler_temperature(self, addr, device_number, args):
+        data = 0
 
     def update_air_conditioner(self, addr, device_number, args):
         data = calc_ac_message(args, self.logger)

@@ -1,6 +1,7 @@
 import os
 import pickle
 import json
+from werkzeug.datastructures import ImmutableMultiDict
 from flask_socketio import SocketIO, emit, join_room, leave_room, close_room, rooms, disconnect
 
 
@@ -42,6 +43,11 @@ class DeviceManager:
                 getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
         else:
             getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
+        #device['last_config'] = args
+        args=args.to_dict()
+        for k, v in device['last_config'].items():
+            if k not in args:
+                args[k] = v
         device['last_config'] = args
 
 

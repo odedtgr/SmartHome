@@ -68,27 +68,35 @@ class Settings:
             'id':           5,
             'name': 	    'Water Heater',
             'type': 	    'boiler',
-            'address':      '\x00\x03',
+            'address':      '\x00\x07',
             'number':       1,
             'last_config':  {'mode': '0'}
         },
         {
-            'id':           6,
+            'id': 6,
+            'name': 'Water temperature',
+            'type': 'boiler_temperature',
+            'address': '\x00\x07',
+            'number': 2,
+            'last_config': {'Temp': 0}
+        },
+        {
+            'id':           7,
             'name': 	    'Twins room Shutter',
             'type': 	    'shutterNew',
             'address':      '\x00\x02',
             'number':       1,
             'last_config':  {'mode': '100'}
-        },
-        {
-            'id':           7,
-            'name': 	    'Test Light',
-            'type': 	    'light',
-            'mqtt':         'true',
-            'address':      'test_light',
-            'number':       1,
-            'last_config':  {'device_on': 'false'}
-        }
+        }#,
+        #{
+         #   'id':           8,
+          #  'name': 	    'Test Light',
+           # 'type': 	    'light',
+            #'mqtt':         'true',
+            #'address':      'test_light',
+            #'number':       1,
+            #'last_config':  {'device_on': 'false'}
+        #}
     ]
 
     SCHEDULER = [

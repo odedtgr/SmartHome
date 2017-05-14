@@ -10,8 +10,13 @@ $('.toggle_div').on('click', function(event, state) {
 });
 
 $('button').on('click', function() {
-    $(this).closest('.btn-group').find('button').removeClass('active')
+    $(this).closest('.btn-group').find('button').removeClass('active');
     $(this).addClass('active');
+
+    if ($(this).parent('.btn-group').attr('ignore') === 'true')
+        return;
+    if ($(this).attr('ignore') === 'true')
+        return;
     //scheduler general on-off button on devices window
     if ($(this).parent('.btn-group').attr('val') === 'scheduler')
         update_scheduler($(this).attr('val') === 'true');

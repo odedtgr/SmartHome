@@ -35,7 +35,7 @@
     <div class="col-xs-12 col-lg-12"></div>
 
     <div class="col-xs-6 col-lg-2">
-        <div class="btn-group" role="group" aria-label="Mode" val="mode">
+        <div class="btn-group ignore" role="group" aria-label="Mode" val="mode">
             <button type="button" class="btn btn-primary {{'active' if device.last_config['mode'] == '0'}}" aria-label="0" val="0">Off</button>
             <button type="button" class="btn btn-alert {{'active' if (device.last_config['mode'] == '3'  or device.last_config['mode'] == '4' or device.last_config['mode'] == '5')}}" aria-label="4" val="4">Auto</button>
             <button type="button" class="btn btn-alert {{'active' if (device.last_config['mode'] == '1' or device.last_config['mode'] == '2')}}" aria-label="2" val="2">On</button>
@@ -45,6 +45,43 @@
     <div class="col-xs-3 col-lg-1 T">
         {{"T= {} C".format(device.last_config['Temp'])}}
     </div>
+
+    <div class="col-xs-3 col-lg-1">
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#boiler_stats" ignore="true" onclick="setBoilerTimeRange({{device.last_config['timeRange']}})">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div id="boiler_stats" class="collapse {{'in' if (device.last_config['visible'] == 'false')}}">
+        <script>
+            function setBoilerURL(url){
+                document.getElementById('boiler_iframe').src = url;
+            }
+        </script>
+        <iframe id="boiler_iframe" width="390" height="200" style="border: 1px solid #cccccc;" ></iframe>
+        <div class="btn-group" role="group" ignore="true">
+            <button class="btn-default" onclick="setBoilerTimeRange(1)">Hour</button>
+            <button class="btn-default" onclick="setBoilerTimeRange(4)">4 Hours</button>
+            <button class="btn-default active" onclick="setBoilerTimeRange(24)">Day</button>
+            <button class="btn-default" onclick="setBoilerTimeRange(24*7)">Week</button>
+        </div>
+    </div>
+    <script>
+            function setBoilerTimeRange(hours) {
+                var now = new Date();
+                localOffset = now.getTimezoneOffset() / 60;
+                now.setHours(now.getHours()- hours + localOffset);
+                var MyDateString;
+                MyDateString = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2) + '%20' + ('0' + now.getHours()).slice(-2) + ':' + ('0' + (now.getMinutes())).slice(-2) + ':' + ('0' + (now.getSeconds())).slice(-2);
+                setBoilerURL("http://api.thingspeak.com/channels/112955/charts/3?width=auto&height=auto&dynamic=true&title=&start="+MyDateString)
+
+                //update the device config to server memory for reload.
+                attributes = new Object();
+                //while($( "#{{device.id}}" ).find('.collapse').hasClass( "collapsing" ));
+                //attributes['visible'] = $( "#{{device.id}}" ).find('.collapse').hasClass( "in" );
+                attributes['timeRange'] = hours;
+                update_device({{ device.id }}, attributes);
+            }
+    </script>
 </div>
 
     

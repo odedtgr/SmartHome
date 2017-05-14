@@ -79,7 +79,10 @@ def device_config_panel(device_id, schedule_index):
         device['last_config'] = the_scheduler[schedule_index]['config']
     else:
         device['last_config'] = dict()
-    return render_template('{}.html'.format(device['type']), device=device, show_device_label=False)
+    if(device['type']=='boiler'):
+        return render_template('{}_scheduler.html'.format(device['type']), device=device, show_device_label=False)
+    else:
+        return render_template('{}.html'.format(device['type']), device=device, show_device_label=False)
 
 
 @app.route("/new_schedule_item_panel/<int:schedule_index>", methods=['GET', 'POST'])

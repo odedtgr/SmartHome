@@ -88,15 +88,15 @@ class Settings:
             'number':       1,
             'last_config':  {'mode': '100'}
         }#,
-        #{
-         #   'id':           8,
-          #  'name': 	    'Test Light',
-           # 'type': 	    'light',
-            #'mqtt':         'true',
-            #'address':      'test_light',
-            #'number':       1,
-            #'last_config':  {'device_on': 'false'}
-        #}
+        # {
+        #     'id':           8,
+        #     'name': 	    'Test Light',
+        #     'type': 	    'light',
+        #     'mqtt':         'true',
+        #     'address':      'test_light',
+        #     'number':       1,
+        #     'last_config':  {'device_on': 'false'}
+        # }
     ]
 
     SCHEDULER = [

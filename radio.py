@@ -118,12 +118,13 @@ class Radio:
                        data=(chr(device_number)+data))
 
     def update_boiler(self, addr, device_number, args):
-        data = chr(int(args['mode']))
-        self.xbee.send('tx',
-                       frame_id='A',
-                       dest_addr=addr,
-                       options='\x00',
-                       data=(chr(device_number)+data))
+        if(args.has_key('mode')):
+            data = chr(int(args['mode']))
+            self.xbee.send('tx',
+                           frame_id='A',
+                           dest_addr=addr,
+                           options='\x00',
+                           data=(chr(device_number)+data))
 
     def update_temperature(self, addr, device_number, args):
         data = 0

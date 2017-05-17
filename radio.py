@@ -80,6 +80,8 @@ class Radio:
                               }
                 if device['type'] == 'boiler_temperature':
                     temperature = float((ord(data['rf_data'][2]) << 8) | (ord(data['rf_data'][1]) << 0)) / float(256)
+                    if temperature > 255:
+                        return
                     device = self.status_updater.get_device_by_address(data['source_addr'], 1)
                     status = {'Temp': str(temperature)}
                     ThingSpeak_update_DS18B20(temperature)

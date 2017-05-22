@@ -83,7 +83,7 @@ $(document).ready(function()
             chart:
             {
                 renderTo: 'chart-container',
-                zoomType:'y'
+                zoomType:'x'
             },
             rangeSelector: {
                 buttons: [{
@@ -115,7 +115,7 @@ $(document).ready(function()
                     text: 'All'
                 }],
                 inputEnabled: false,
-                selected: 4  //Change to 4th button as default
+                selected: 2  //Change to 4th button as default
             },
             title: {
                 text: ''
@@ -145,7 +145,7 @@ $(document).ready(function()
                 ordinal:false,
                 min: Date.UTC(2013,02,28),
                 dateTimeLabelFormats : {
-                    hour: '%l %p',
+                    hour: '%I %p',
                     minute: '%l:%M %p'
                 },
                 title: {

@@ -1,3 +1,5 @@
+html, body { overflow-x: hidden; }
+
 input[type="number"] {
     width: 50px;
 }

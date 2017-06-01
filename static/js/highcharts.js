@@ -5,7 +5,7 @@ var channelsLoaded = 0;
 // the 'T' Temperature left axis, or the 'O' Other right axis.
 var channelKeys =[];
 //Change TO: display two fields from the same channel from a Rain gauge - 15min counts, and total counts
-//  src="http://api.thingspeak.com/channels/8652/charts/3?width=1300&height=520&results=1000&dynamic=false&title=15minTotals%20(0.5mm)" ></iframe>
+//src="http://api.thingspeak.com/channels/8652/charts/3?width=1300&height=520&results=1000&dynamic=false&title=15minTotals%20(0.5mm)" ></iframe>
 channelKeys.push({channelNumber:112955, name:'Temperature',key:'8UKAQRZZVL67BGVI',
     fieldList:[{field:3,axis:'C'}]});
 
@@ -23,7 +23,6 @@ function getChartDate(d) {
 //  This is where the chart is generated.
 $(document).ready(function()
 {
-    var last_date; // variable for the last date added to the chart
     //make series numbers for each field
     var seriesCounter=0
     for (var channelIndex=0; channelIndex<channelKeys.length; channelIndex++)  // iterate through each channel

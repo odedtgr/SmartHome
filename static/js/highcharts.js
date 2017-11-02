@@ -73,7 +73,7 @@ $(document).ready(function()
             channelsLoaded++;
             if (channelsLoaded==channelKeys.length){createChart();}
         })
-            .fail(function() { alert('getJSON request failed! '); });
+            //.fail(function() { alert('getJSON request failed! '); });
     }
     // create the chart when all data is loaded
     function createChart() {

@@ -36,7 +36,7 @@ class Settings:
 	    {
             'id':           1,
             'name': 	    'Living Room Shutter',
-            'type': 	    'shutter',
+            'type': 	    'shutterNew',
             'address':      '\x00\x05',
             'number':       1,
             'last_config':  {'mode': '100'}

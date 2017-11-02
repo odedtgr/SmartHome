@@ -44,7 +44,10 @@ class DeviceManager:
         else:
             getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
         #device['last_config'] = args
-        args=args.to_dict()
+        try:
+            args=args.to_dict()
+        except:
+            args = args
         for k, v in device['last_config'].items():
             if k not in args:
                 args[k] = v

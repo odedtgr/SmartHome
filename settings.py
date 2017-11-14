@@ -25,16 +25,16 @@ class Settings:
     GROUP_DEVICES = ['ALL SHUTTERS']
 
     DEVICES = [
-        {
-            'id':           0,
-            'name': 	    'Temperature',
-            'type': 	    'temperature',
-            'address':      '\x00\x04',
-            'number':       2,
-            'last_config':  {'Temp':0}
-        },
+       # {
+       #      'id':           0,
+       #      'name': 	    'Temperature',
+       #      'type': 	    'temperature',
+       #      'address':      '\x00\x04',
+       #      'number':       2,
+       #      'last_config':  {'Temp':0}
+       #  },
 	    {
-            'id':           1,
+            'id':           0,
             'name': 	    'Living Room Shutter',
             'type': 	    'shutterNew',
             'address':      '\x00\x05',
@@ -42,7 +42,7 @@ class Settings:
             'last_config':  {'mode': '100'}
         },
 	    {
-            'id':           2,
+            'id':           1,
             'name': 	    'Bedroom Shutter',
             'type': 	    'shutterNew',
             'address':      '\x00\x04',
@@ -50,14 +50,14 @@ class Settings:
             'last_config':  {'mode': '100'}
         },
         {
-            'id':           3,
+            'id':           2,
             'name': 	    'Living Air Conditioner',
             'type': 	    'air_conditioner',
             'address':      '\x00\x06',
             'number':       1,
             'last_config':  {'fan': '1', 'on_off': 'false', 'temp': '25', 'mode': 'cool'}
         },
-        {   'id':           4,
+        {   'id':           3,
             'name': 	    'Rooms Air Conditioner',
             'type': 	    'air_conditioner',
             'address':      '\x00\x06',
@@ -65,7 +65,7 @@ class Settings:
             'last_config':  {'fan': '1', 'on_off': 'false', 'temp': '25', 'mode': 'cool'}
         },
         {
-            'id':           5,
+            'id':           4,
             'name': 	    'Water Heater',
             'type': 	    'boiler',
             'address':      '\x00\x07',
@@ -73,7 +73,7 @@ class Settings:
             'last_config':  {'mode': '0'}
         },
         {
-            'id': 6,
+            'id': 5,
             'name': 'Water temperature',
             'type': 'boiler_temperature',
             'address': '\x00\x07',
@@ -81,22 +81,22 @@ class Settings:
             'last_config': {'Temp': 0}
         },
         {
-            'id':           7,
+            'id':           6,
             'name': 	    'Twins room Shutter',
             'type': 	    'shutterNew',
             'address':      '\x00\x02',
             'number':       1,
             'last_config':  {'mode': '100'}
-        }#,
-        # {
-        #     'id':           8,
-        #     'name': 	    'Test Light',
-        #     'type': 	    'light',
-        #     'mqtt':         'true',
-        #     'address':      'test_light',
-        #     'number':       1,
-        #     'last_config':  {'device_on': 'false'}
-        # }
+        },
+        {
+            'id':           7,
+            'name': 	    'Test Light',
+            'type': 	    'light',
+            'mqtt':         'true',
+            'address':      'test_light',
+            'number':       1,
+            'last_config':  {'device_on': 'false'}
+        }
     ]
 
     SCHEDULER = [

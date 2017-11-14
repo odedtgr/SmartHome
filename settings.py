@@ -1,4 +1,6 @@
 class Settings:
+    release = "2"
+
     HOME_NAME = "Tagar"
     users = {"Oded":"Stamir47",
              "Maya":"Stamir47"}

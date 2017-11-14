@@ -27,7 +27,7 @@ def devices():
     if not is_loggedin():
         return redirect(url_for('login', return_to='devices'))
     the_devices = get_device_manager().devices
-    return render_template('devices.html', devices=the_devices, show_device_label=True, show_status=True, scheduler_on=Settings.scheduler_on)
+    return render_template('devices.html', devices=the_devices, show_device_label=True, show_status=True, scheduler_on=Settings.scheduler_on, release=Settings.release)
 
 @app.route("/scheduler")
 def scheduler():
@@ -35,7 +35,7 @@ def scheduler():
         return redirect(url_for('login', return_to='scheduler'))
     the_devices = get_device_manager().simple_devices()
     the_scheduler = get_device_manager().scheduler
-    return render_template('scheduler.html', devices=the_devices, show_device_label=True, show_status=False, scheduler=the_scheduler)
+    return render_template('scheduler.html', devices=the_devices, show_device_label=True, show_status=False, scheduler=the_scheduler, release=Settings.release)
 
 @socketio.on('my broadcast event', namespace='')
 def update_device_websoc(message):
@@ -80,9 +80,9 @@ def device_config_panel(device_id, schedule_index):
     else:
         device['last_config'] = dict()
     if(device['type']=='boiler'):
-        return render_template('{}_scheduler.html'.format(device['type']), device=device, show_device_label=False)
+        return render_template('{}_scheduler.html'.format(device['type']), device=device, show_device_label=False, release=Settings.release)
     else:
-        return render_template('{}.html'.format(device['type']), device=device, show_device_label=False)
+        return render_template('{}.html'.format(device['type']), device=device, show_device_label=False, release=Settings.release)
 
 
 @app.route("/new_schedule_item_panel/<int:schedule_index>", methods=['GET', 'POST'])

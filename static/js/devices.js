@@ -39,6 +39,8 @@ function device_changed(control) {
         attr = air_conditioner_attr(device_row, control.find('.deviceOn').attr('val') === 'on_off');
     else if(device_type === 'light')
         attr = light_attr(device_row);
+        $(device_row).find('.btn-danger').removeClass("btn-danger").addClass("btn-default");
+        $(device_row).find('.btn-primary').removeClass("btn-primary").addClass("btn-default");
     update_device(device_id, attr);
 }
 
@@ -104,12 +106,15 @@ function update_bolier_temperature_gui(device_id, status){
     $(device).find('.T').html("T= "+status.Temp+" C");
 }
 
-function update_light_gui(device_id, status){
+function update_light_gui(device_id, status) {
     device = document.getElementById(device_id);
-    if(status.device_on == 'true' || status.on_off == 'True')
+    if (status.device_on == 'true' || status.on_off == 'True') {
         $(device).find('.deviceOn').prop('checked', true).change()
-    else
+        $(device).find('.btn').removeClass("btn-default").addClass("btn-danger")
+    }else {
         $(device).find('.deviceOn').prop('checked', false).change()
+        $(device).find('.btn').removeClass("btn-default").addClass("btn-primary")
+    }
 }
 
 // refresh every 1 hour to get latest devices status

@@ -100,7 +100,6 @@ function update_temperature_gui(device_id, status){
     $(device).find('.T').html("T= "+status.Temp+" C");
     $(device).find('.RH').html("RH= "+status.Rh);
 }
-
 function update_bolier_temperature_gui(device_id, status){
     device = document.getElementById(device_id);
     $(device).find('.T').html("T= "+status.Temp+" C");

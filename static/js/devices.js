@@ -39,8 +39,8 @@ function device_changed(control) {
         attr = air_conditioner_attr(device_row, control.find('.deviceOn').attr('val') === 'on_off');
     else if(device_type === 'light') {
         attr = light_attr(device_row);
-        $(device_row).find('.btn-danger').removeClass("btn-danger").addClass("btn-default");
-        $(device_row).find('.btn-primary').removeClass("btn-primary").addClass("btn-default");
+        $(device_row).find('.btn-danger').removeClass("btn-danger").addClass("btn-default")
+        $(device_row).find('.btn-primary').removeClass("btn-primary").addClass("btn-default")
     }
     update_device(device_id, attr);
 }

@@ -6,7 +6,13 @@
     {% include "menu.html" %}
 
     {% for device in devices %}
-            {% include "{}.html".format(device.type) %}
+            {% if 'show_in_devices' in device %}
+                {% if 'show_in_devices'=='true' %}
+                    {% include "{}.html".format(device.type) %}
+                {% endif %}
+            {% else %}
+                {% include "{}.html".format(device.type) %}
+            {% endif %}
     {% endfor %}
 
     <div id="log"></div>

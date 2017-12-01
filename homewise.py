@@ -10,6 +10,8 @@ from scheduler import Scheduler
 from settings import *
 from pushover import *
 from MQTT import *
+from api_manager import *
+from scenario_manager import *
 
 async_mode = 'threading'
 
@@ -36,6 +38,14 @@ def scheduler():
     the_devices = get_device_manager().simple_devices()
     the_scheduler = get_device_manager().scheduler
     return render_template('scheduler.html', devices=the_devices, show_device_label=True, show_status=False, scheduler=the_scheduler, release=Settings.release)
+
+@app.route("/scenarios")
+def scenarios():
+    if not is_loggedin():
+        return redirect(url_for('login', return_to='devices'))
+    the_devices = get_device_manager().devices
+    return render_template('scenarios.html', devices=the_devices, release=Settings.release)
+
 
 @socketio.on('my broadcast event', namespace='')
 def update_device_websoc(message):
@@ -66,8 +76,15 @@ def update_scheduler():
     the_scheduler = json.loads(request.form['scheduler'])
     device_manager.update_scheduler(the_scheduler)
     scheduler.set(the_scheduler)
-
     return json.dumps({'succeeded': True})
+
+@app.route("/execute_scenario/<scenario_name>", methods=['GET', 'POST'])
+def execute_scenario(scenario_name):
+    if not is_loggedin():
+        return redirect(url_for('login', return_to='devices'))
+    execute_scenario(scenario_name)
+    return json.dumps({'succeeded': True})
+
 
 @app.route("/device_config_panel/<int:device_id>/<int:schedule_index>", methods=['GET', 'POST'])
 def device_config_panel(device_id, schedule_index):
@@ -153,7 +170,9 @@ device_manager = DeviceManager(Settings.DEVICES,
                                radio,
                                socketio)
 mqtt = MQTT(Settings.MQTT_BROKER, Settings.MQTT_PORT, Settings.MQTT_TOPIC_SUB, Settings.MQTT_TOPIC_PUB, device_manager, app.logger)
+api_manager = API_Manager(device_manager)
 scheduler = Scheduler(device_manager.scheduler, Settings, device_manager, app.logger)
+
 
 
 if __name__ == "__main__":
@@ -161,6 +180,6 @@ if __name__ == "__main__":
     try:
         socketio.run(app, host=Settings.HOST, port=Settings.PORT, debug=Settings.DEBUG, use_reloader=False)
     except :
-        pushover_update("Allready runnung", "0")
+        pushover_update("HomeWise", "Allready runnung", "0")
         os._exit(1)
 radio.close()

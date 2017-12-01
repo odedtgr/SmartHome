@@ -10,6 +10,10 @@ class DeviceManager:
     def add_mqtt_client(self, mqtt):
         self.mqtt = mqtt
 
+    # add an mqtt instance to device manager, used for mqtt.publish
+    def add_api_manager(self, api_manager):
+        self.api_manager = api_manager
+
 
     def get_device_by_id(self, device_id):
         for device in self.devices:
@@ -33,12 +37,14 @@ class DeviceManager:
     def update_simple_device(self, device, args):
         device_type = device['type']
         #works for MQTT or XBee device according to the 'mqtt' setting.
-        if 'mqtt' in device:
-            if device['mqtt'] == 'true':
+        if 'protocol' in device:
+            if device['protocol'] == 'mqtt':
                 topic = self.mqtt.topic_pub
                 topic = topic + '/' + device['address']
                 args_json_str = json.dumps(args)
                 self.mqtt.publish(topic, args_json_str)
+            elif device['protocol'] == 'api':
+                self.api_manager.send(device['number'], args)
             else:
                 getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
         else:

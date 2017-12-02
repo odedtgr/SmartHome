@@ -3,23 +3,18 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/static/js/scenarios.min.js" />
-        <item url="file://$PROJECT_DIR$/static/js/highcharts.min.js" />
         <item url="file://$PROJECT_DIR$/static/js/app.min.js" />
-        <item url="file://$PROJECT_DIR$/static/js/devices.min.js" />
-        <item url="file://$PROJECT_DIR$/static/js/highstock.min.js" />
+        <item url="file://$PROJECT_DIR$/static/js/highcharts.min.min.js" />
+        <item url="file://$PROJECT_DIR$/static/js/scenarios.min.min.js" />
+        <item url="file://$PROJECT_DIR$/static/js/app.min.min.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/static/js/devices.min.min.js" />
-      <root url="file://$PROJECT_DIR$/static/js/devices.min.min.min.min.js" />
-      <root url="file://$PROJECT_DIR$/static/js/scheduler.min.min.min.min.js" />
-      <root url="file://$PROJECT_DIR$/static/js/highstock.min.min.min.js" />
-      <root url="file://$PROJECT_DIR$/static/js/highcharts.min.min.min.js" />
       <root url="file://$PROJECT_DIR$/static/js/scenarios.min.js" />
-      <root url="file://$PROJECT_DIR$/static/js/highcharts.min.js" />
       <root url="file://$PROJECT_DIR$/static/js/app.min.js" />
-      <root url="file://$PROJECT_DIR$/static/js/devices.min.js" />
-      <root url="file://$PROJECT_DIR$/static/js/highstock.min.js" />
+      <root url="file://$PROJECT_DIR$/static/js/highcharts.min.min.js" />
+      <root url="file://$PROJECT_DIR$/static/js/scenarios.min.min.js" />
+      <root url="file://$PROJECT_DIR$/static/js/app.min.min.js" />
     </CLASSES>
     <SOURCES />
   </library>

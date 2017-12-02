@@ -1,5 +1,5 @@
 $('button').on('click', function() {
-    execute_scenario('test_name');
+    execute_scenario('Close living room');
 });
 
 

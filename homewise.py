@@ -82,7 +82,7 @@ def update_scheduler():
 def execute_scenario(scenario_name):
     if not is_loggedin():
         return redirect(url_for('login', return_to='devices'))
-    execute_scenario(scenario_name)
+    scenario_manager.execute_scenario(scenario_name)
     return json.dumps({'succeeded': True})
 
 
@@ -172,6 +172,7 @@ device_manager = DeviceManager(Settings.DEVICES,
 mqtt = MQTT(Settings.MQTT_BROKER, Settings.MQTT_PORT, Settings.MQTT_TOPIC_SUB, Settings.MQTT_TOPIC_PUB, device_manager, app.logger)
 api_manager = API_Manager(device_manager)
 scheduler = Scheduler(device_manager.scheduler, Settings, device_manager, app.logger)
+scenario_manager = Scenario_Manager(device_manager, Settings.SCENARIOS)
 
 
 

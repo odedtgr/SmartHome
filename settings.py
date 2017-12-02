@@ -117,3 +117,18 @@ class Settings:
 
     ]
 	
+    SCENARIOS = [
+        {'name' : 'Close living room',
+        'tasks':[
+            {
+                'device_id': 0,
+                'args' : {'mode' : '0'}
+            },
+            {
+                'device_id': 7,
+                'args': {'device_on': 'false'}
+            }
+        ]
+
+        }
+    ]

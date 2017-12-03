@@ -1,6 +1,5 @@
 class Settings:
-    release = "https://cdn.rawgit.com/odedtgr/SmartHome/v1.3/static/"
-    release = ''
+    release = "https://cdn.rawgit.com/odedtgr/SmartHome/1.6/static/"
 
     HOME_NAME = "Tagar"
     users = {"Oded":"Stamir47",

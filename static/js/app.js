@@ -62,6 +62,14 @@ function update_scheduler(is_on) {
     });
 };
 
+function execute_scenario(scenario_name) {
+    $.ajax({
+        type: "POST",
+        url: 'execute_scenario/' + scenario_name,
+        success: success,
+        error: function (XMLHttpRequest, textStatus, errorThrown) { displayErrorMessage(errorThrown); }
+    });
+};
 
 function success(result) {
     res = JSON.parse(result);

@@ -1,5 +1,6 @@
 class Settings:
     release = "https://cdn.rawgit.com/odedtgr/SmartHome/v1.3/static/"
+    release = ''
 
     HOME_NAME = "Tagar"
     users = {"Oded":"Stamir47",
@@ -94,14 +95,51 @@ class Settings:
             'id':           7,
             'name': 	    'Test Light',
             'type': 	    'light',
-            'mqtt':         'true',
+            'protocol':     'mqtt',
             'address':      'test_light',
             'number':       1,
             'last_config':  {'device_on': 'false'}
+        },
+        {
+            'id': 8,
+            'name': 'TV',
+            'show_in_devices' : 'false',
+            'type': 'samsung_tv',
+            'protocol': 'api',
+            'address': '192.168.1.40',
+            'number': 1,
+            'last_config': {'key': 'KEY_POWER'}
         }
+
     ]
 
     SCHEDULER = [
 
     ]
 	
+    SCENARIOS = [
+        {'name' : 'Close living room',
+            'tasks':[
+                {
+                'name': 'Living Room Shutter',
+                'args' : {'mode' : '0'}
+                },
+                {
+                'name': 'Test Light',
+                'args': {'device_on': 'false'}
+                }
+            ]
+        },
+        {'name': 'Close all',
+         'tasks': [
+             {
+                 'name': 'Living Room Shutter',
+                 'args': {'mode': '0'}
+             },
+             {
+                 'name': 'Test Light',
+                 'args': {'device_on': 'false'}
+             }
+         ]
+         }
+    ]

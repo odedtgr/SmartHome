@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include "head.html" %}
+  <body>
+    {% set active_link = 'scenarios' %}
+    {% include "menu.html" %}
+
+    {% for scenario in SCENARIOS %}
+        <div id="{{ scenario.name }}" class="row">
+            <div class="col-xs-12 col-lg-12">
+                <button type="button" class="btn btn-primary" aria-label="0" val="{{ scenario.name }}">{{ scenario.name }}</button>
+            </div>
+        </div>
+    {% endfor %}
+
+
+    <div id="log"></div>
+
+    {% include "javascripts.html" %}
+    <!--<script src="js/devices.js"></script>-->
+    <script src="{{release}}js/scenarios.min.js"></script>
+  </body>
+</html>

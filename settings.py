@@ -95,7 +95,7 @@ class Settings:
             'id':           7,
             'name': 	    'Test Light',
             'type': 	    'light',
-            'protocol':      'mqtt',
+            'protocol':     'mqtt',
             'address':      'test_light',
             'number':       1,
             'last_config':  {'device_on': 'false'}
@@ -119,16 +119,27 @@ class Settings:
 	
     SCENARIOS = [
         {'name' : 'Close living room',
-        'tasks':[
-            {
-                'device_id': 0,
+            'tasks':[
+                {
+                'name': 'Living Room Shutter',
                 'args' : {'mode' : '0'}
-            },
-            {
-                'device_id': 7,
+                },
+                {
+                'name': 'Test Light',
                 'args': {'device_on': 'false'}
-            }
-        ]
-
-        }
+                }
+            ]
+        },
+        {'name': 'Close all',
+         'tasks': [
+             {
+                 'name': 'Living Room Shutter',
+                 'args': {'mode': '0'}
+             },
+             {
+                 'name': 'Test Light',
+                 'args': {'device_on': 'false'}
+             }
+         ]
+         }
     ]

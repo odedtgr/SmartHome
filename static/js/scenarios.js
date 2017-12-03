@@ -1,5 +1,6 @@
 $('button').on('click', function() {
-    execute_scenario('Close living room');
+    scenario_name = $(this).attr('val');
+    execute_scenario(scenario_name);
 });
 
 

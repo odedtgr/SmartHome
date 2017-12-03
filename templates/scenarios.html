@@ -4,7 +4,14 @@
   <body>
     {% set active_link = 'scenarios' %}
     {% include "menu.html" %}
-    <button type="button" class="btn btn-primary" aria-label="0" val="0">Test scenario</button>
+
+    {% for scenario in SCENARIOS %}
+        <div id="{{ scenario.name }}" class="row">
+            <div class="col-xs-12 col-lg-12">
+                <button type="button" class="btn btn-primary" aria-label="0" val="{{ scenario.name }}">{{ scenario.name }}</button>
+            </div>
+        </div>
+    {% endfor %}
 
 
     <div id="log"></div>

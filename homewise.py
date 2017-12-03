@@ -44,7 +44,7 @@ def scenarios():
     if not is_loggedin():
         return redirect(url_for('login', return_to='devices'))
     the_devices = get_device_manager().devices
-    return render_template('scenarios.html', devices=the_devices, release=Settings.release)
+    return render_template('scenarios.html', SCENARIOS = Settings.SCENARIOS, release=Settings.release)
 
 
 @socketio.on('my broadcast event', namespace='')

@@ -40,14 +40,16 @@
                 <option value="29" {{'selected' if device.last_config['temp'] == '29'}}>29</option>
                 <option value="30" {{'selected' if device.last_config['temp'] == '30'}}>30</option>
             </select>
-            <span class="input-group-addon">C&deg</span>
+            <span class="input-group-addon">
+                <i class="fa fa-thermometer-full  fa-lg"></i>
+            </span>
         </div>
     </div>
 
     <div class="col-xs-5 col-lg-2">
         <div class="btn-group pull-right" role="group" aria-label="Mode" val="mode">
             <button type="button" class="btn btn-default {{'active' if device.last_config['mode'] == 'cool'}}" val="cool">
-                <i class="fa fa-asterisk fa-lg" aria-hidden="true" {{'style=color:#337ab7' if device.last_config['mode'] == 'cool'}} ></i>
+                <i class="fa fa-snowflake-o fa-lg" aria-hidden="true" {{'style=color:#337ab7' if device.last_config['mode'] == 'cool'}} ></i>
             </button>
             <button type="button" class="btn btn-default {{'active' if device.last_config['mode'] == 'heat'}}" val="heat">
                 <i class="fa fa-sun-o fa-lg" aria-hidden="true" {{'style=color:red' if device.last_config['mode'] == 'heat'}}></i>

@@ -44,7 +44,7 @@ class DeviceManager:
                 args_json_str = json.dumps(args)
                 self.mqtt.publish(topic, args_json_str)
             elif device['protocol'] == 'api':
-                self.api_manager.send(device['number'], args)
+                self.api_manager.send(device, args)
             else:
                 getattr(self.radio, 'update_%s' % device_type)(device['address'], device['number'], args)
         else:

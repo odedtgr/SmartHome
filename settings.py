@@ -126,19 +126,12 @@ class Settings:
                 {
                 'name': 'Test Light',
                 'args': {'device_on': 'false'}
+                },
+                {
+                    'name': 'TV',
+                    'args': {'key': 'KEY_POWER'}
                 }
+
             ]
-        },
-        {'name': 'Close all',
-         'tasks': [
-             {
-                 'name': 'Living Room Shutter',
-                 'args': {'mode': '0'}
-             },
-             {
-                 'name': 'Test Light',
-                 'args': {'device_on': 'false'}
-             }
-         ]
-         }
+        }
     ]

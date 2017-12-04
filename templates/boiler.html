@@ -42,8 +42,9 @@
         </div>
     </div>
 
-    <div class="col-xs-3 col-lg-1 T">
-        {{"T= {} C".format(device.last_config['Temp'])}}
+    <div class="col-xs-3 col-lg-1">
+        <i class="fa fa-thermometer-full  fa-lg"></i>
+        <i class="T">{{" {}".format(device.last_config['Temp'])}}</i>
     </div>
 
     <div class="col-xs-3 col-lg-1">

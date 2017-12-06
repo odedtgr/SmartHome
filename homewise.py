@@ -169,7 +169,7 @@ device_manager = DeviceManager(Settings.DEVICES,
                                app.logger,
                                radio,
                                socketio)
-mqtt = MQTT(Settings.MQTT_BROKER, Settings.MQTT_PORT, Settings.MQTT_TOPIC_SUB, Settings.MQTT_TOPIC_PUB, device_manager, app.logger)
+mqtt = MQTT(Settings.MQTT_BROKER, Settings.MQTT_PORT, Settings.MQTT_TOPIC_SUB, Settings.MQTT_TOPIC_PUB, Settings.HOMEKIT_NAME, device_manager, app.logger)
 api_manager = API_Manager(device_manager)
 scheduler = Scheduler(device_manager.scheduler, Settings, device_manager, app.logger)
 scenario_manager = Scenario_Manager(device_manager, Settings.SCENARIOS)

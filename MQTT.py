@@ -19,6 +19,7 @@ class MQTT:
         #get the device address from the topic by finding '/'  Ex HomeWise/test_device
         slash_pos = msg.topic.index('/')
         device_address = msg.topic[slash_pos+1:len(msg.topic)]
+
         device = self.status_updater.get_device_by_address(device_address, 1)
 
         if device is not None:
@@ -34,7 +35,7 @@ class MQTT:
         self.client.publish(topic,payload)
 
 
-    def __init__(self, broker, port, topic_sub, topic_pub, device_manager, logger):
+    def __init__(self, broker, port, topic_sub, topic_pub, homekit_name, device_manager, logger):
         client = mqtt.Client()
         client.status_updater = StatusUpdater(device_manager)
         client.on_message = MQTT.on_message
@@ -43,6 +44,7 @@ class MQTT:
         self.port = port
         self.topic_sub = topic_sub
         self.topic_pub = topic_pub
+        self.homekit_name = homekit_name
         self.logger = logger
         self.stop_event = None
 

@@ -19,6 +19,7 @@ class Settings:
     MQTT_BROKER = 'localhost'
     MQTT_TOPIC_SUB = "HomeWise/#"
     MQTT_TOPIC_PUB = "HomeWise/out"
+    HOMEKIT_NAME = "homekit"
 
     MQTT_PORT = 1883
 
@@ -133,5 +134,22 @@ class Settings:
                 }
 
             ]
-        }
+        },
+        {'name': 'Open all windows',
+             'tasks': [
+                {
+                 'name': 'Living Room Shutter',
+                 'args': {'mode': '100'}
+                },
+                {
+                 'name': 'Bedroom Shutter',
+                 'args': {'mode': '100'}
+                },
+                {
+                 'name': 'Twins room Shutter',
+                 'args': {'mode': '100'}
+                }
+
+            ]
+         }
     ]

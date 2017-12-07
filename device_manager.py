@@ -153,6 +153,12 @@ class StatusUpdater:
                 return device
         return None
 
+    def get_device_by_name(self, name, number):
+        for device in self.device_manager.devices:
+            if device.get('name') == name and device.get('number') == number:
+                return device
+        return None
+
 
     def update_device_status(self, device, status):
         for k, v in device['last_config'].items():

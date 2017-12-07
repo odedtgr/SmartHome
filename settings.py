@@ -38,7 +38,7 @@ class Settings:
        #  },
 	    {
             'id':           0,
-            'name': 	    'Living Room Shutter',
+            'name': 	    'Living room window',
             'type': 	    'shutterNew',
             'address':      '\x00\x05',
             'number':       1,
@@ -46,7 +46,7 @@ class Settings:
         },
 	    {
             'id':           1,
-            'name': 	    'Bedroom Shutter',
+            'name': 	    'Bedroom window',
             'type': 	    'shutterNew',
             'address':      '\x00\x04',
             'number':       1,
@@ -54,7 +54,7 @@ class Settings:
         },
         {
             'id':           2,
-            'name': 	    'Living Air Conditioner',
+            'name': 	    'Living room Air Conditioner',
             'type': 	    'air_conditioner',
             'address':      '\x00\x06',
             'number':       1,
@@ -85,7 +85,7 @@ class Settings:
         },
         {
             'id':           6,
-            'name': 	    'Twins room Shutter',
+            'name': 	    'Twins room window',
             'type': 	    'shutterNew',
             'address':      '\x00\x02',
             'number':       1,
@@ -93,7 +93,7 @@ class Settings:
         },
         {
             'id':           7,
-            'name': 	    'Test Light',
+            'name': 	    'TV Light',
             'type': 	    'light',
             'protocol':     'mqtt',
             'address':      'test_light',

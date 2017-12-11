@@ -40,7 +40,7 @@ class DeviceManager:
         if 'protocol' in device:
             if device['protocol'] == 'mqtt':
                 topic = self.mqtt.topic_pub
-                topic = topic + '/' + device['address']
+                topic = topic + device['name']
                 args_json_str = json.dumps(args)
                 self.mqtt.publish(topic, args_json_str)
             elif device['protocol'] == 'api':
@@ -153,9 +153,9 @@ class StatusUpdater:
                 return device
         return None
 
-    def get_device_by_name(self, name, number):
+    def get_device_by_name(self, name):
         for device in self.device_manager.devices:
-            if device.get('name') == name and device.get('number') == number:
+            if device.get('name') == name:
                 return device
         return None
 
@@ -167,3 +167,4 @@ class StatusUpdater:
         device['last_config'] = status
         self.device_manager.save_devices()
         self.device_manager.socketio.emit('update_device', {'status': status, 'device': device})
+        self.device_manager.mqtt.update_homebridge(device)

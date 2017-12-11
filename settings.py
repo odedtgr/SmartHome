@@ -17,8 +17,8 @@ class Settings:
     THING_SPEAK_KEY = 'GJR2UBQ6G8UDCKQL'
 
     MQTT_BROKER = 'localhost'
-    MQTT_TOPIC_SUB = "HomeWise/#"
-    MQTT_TOPIC_PUB = "HomeWise/out"
+    MQTT_TOPIC_SUB = "HomeWise/from/"
+    MQTT_TOPIC_PUB = "HomeWise/to/"
     HOMEKIT_NAME = "homekit"
 
     MQTT_PORT = 1883
@@ -73,7 +73,7 @@ class Settings:
             'type': 	    'boiler',
             'address':      '\x00\x07',
             'number':       1,
-            'last_config':  {'mode': '0'}
+            'last_config':  {'mode': '0', 'Temp': '0'}
         },
         {
             'id': 5,
@@ -81,7 +81,7 @@ class Settings:
             'type': 'boiler_temperature',
             'address': '\x00\x07',
             'number': 2,
-            'last_config': {'Temp': 0}
+            'last_config': {'Temp': '0'}
         },
         {
             'id':           6,
@@ -96,7 +96,7 @@ class Settings:
             'name': 	    'TV Light',
             'type': 	    'light',
             'protocol':     'mqtt',
-            'address':      'test_light',
+            'address':      'WiFiSwitch-9f-d6-53',
             'number':       1,
             'last_config':  {'device_on': 'false'}
         },
@@ -107,6 +107,7 @@ class Settings:
             'type': 'samsung_tv',
             'protocol': 'api',
             'address': '192.168.1.40',
+            'mac':'5C:49:7D:1C:E3:BB',
             'number': 1,
             'last_config': {'key': 'KEY_POWER'}
         }

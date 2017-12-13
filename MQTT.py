@@ -55,15 +55,22 @@ class MQTT:
 
                     elif device_type == 'air_conditioner':
                         if command == 'setTargetTemperature':
-                            status = {"temp": str(status)}
+                            #status = {"temp": str(status)}
+                            return
 
                         elif command == 'setTargetHeatingCoolingState':
+                            currently_on = device['last_config'].get('"on_off"') == "true"
+                            desired_on = str(status) != '0'
+                            on_off_changed = 'true'
+                            if desired_on == currently_on:
+                                on_off_changed = 'false'
+
                             if str(status) == '0':
-                                status = {"on_off":"false"}
+                                status = {"on_off-changed":on_off_changed}
                             elif str(status) == '1':
-                                status = {"on_off": "true", "mode":"heat"}
+                                status = {"on_off-changed":on_off_changed, "mode":"heat"}
                             else :
-                                status = {"on_off": "true", "mode": "cool"}
+                                status = {"on_off-changed":on_off_changed, "mode": "cool"}
 
                     for k, v in device['last_config'].items():
                         if k not in status:

@@ -10,7 +10,7 @@ class MQTT:
     def connect_to_broker(client, broker, topic,  port):
 
         client.connect(broker, port, 60)
-        client.subscribe(topic)
+        client.subscribe(topic, qos=1)
         print("connected to broker. subscribed to "+str(topic))
         client.loop_start()
 
@@ -59,7 +59,7 @@ class MQTT:
                             return
 
                         elif command == 'setTargetHeatingCoolingState':
-                            currently_on = device['last_config'].get('"on_off"') == "true"
+                            currently_on = device['last_config'].get("on_off") == "true"
                             desired_on = str(status) != '0'
                             on_off_changed = 'true'
                             if desired_on == currently_on:
@@ -91,8 +91,9 @@ class MQTT:
                 if status is not None:
                     self.status_updater.update_device_status(device, status)
 
+
     def publish(self,topic, payload):
-        self.client.publish(topic,payload)
+        msg_info = self.client.publish(topic,payload, qos=1)
 
     def update_homebridge(self, device):
         device_name = device['name']

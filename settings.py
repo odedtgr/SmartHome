@@ -16,7 +16,7 @@ class Settings:
 
     THING_SPEAK_KEY = 'GJR2UBQ6G8UDCKQL'
 
-    MQTT_BROKER = 'localhost'
+    MQTT_BROKER = '127.0.0.1'
     MQTT_TOPIC_SUB = "HomeWise/from/"
     MQTT_TOPIC_PUB = "HomeWise/to/"
     HOMEKIT_NAME = "homekit"

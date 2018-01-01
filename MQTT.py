@@ -10,7 +10,7 @@ class MQTT:
     def connect_to_broker(client, broker, topic,  port):
 
         client.connect(broker, port, 60)
-        client.subscribe(topic, qos=1)
+        client.subscribe(topic, qos=2)
         print("connected to broker. subscribed to "+str(topic))
         client.loop_start()
 
@@ -93,7 +93,7 @@ class MQTT:
 
 
     def publish(self,topic, payload):
-        msg_info = self.client.publish(topic,payload, qos=1)
+        self.client.publish(topic,payload, qos=2)
 
     def update_homebridge(self, device):
         device_name = device['name']

@@ -55,8 +55,8 @@ class MQTT:
 
                     elif device_type == 'air_conditioner':
                         if command == 'setTargetTemperature':
-                            #status = {"temp": str(status)}
-                            return
+                            status = {"temp": str(status)}
+
 
                         elif command == 'setTargetHeatingCoolingState':
                             currently_on = device['last_config'].get("on_off") == "true"
@@ -71,6 +71,14 @@ class MQTT:
                                 status = {"on_off-changed":on_off_changed, "mode":"heat"}
                             else :
                                 status = {"on_off-changed":on_off_changed, "mode": "cool"}
+
+                        elif command == 'setOn':
+                            currently_on = device['last_config'].get("on_off") == "true"
+                            desired_on = str(status) != '0'
+                            on_off_changed = 'true'
+                            if desired_on == currently_on:
+                                on_off_changed = 'false'
+                            status = {"on_off-changed": on_off_changed}
 
                     for k, v in device['last_config'].items():
                         if k not in status:
@@ -128,6 +136,14 @@ class MQTT:
             self.client.publish(str_to_publish, payload)
 
         if device['type'] == 'air_conditioner':
+            if device['last_config'].get('on_off') == 'false':
+                payload = '{"val":"0"}'
+            else:
+                payload = '{"val":"1"}'
+            topic = 'statusOn'
+            str_to_publish = self.topic_pub + self.client.homekit_name + '/' + device['name'] + '/' + topic
+            self.client.publish(str_to_publish, payload)
+
             if device['last_config'].get('on_off') == 'false':
                 val = '0'
             elif device['last_config'].get('mode') == 'heat':

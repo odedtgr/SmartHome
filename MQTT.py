@@ -150,13 +150,13 @@ class MQTT:
                 val = '1'
             else:
                 val = '2'
-            payload = '{"val":' + val + '}'
-            topic = 'statusTargetHeatingCoolingState'
+            payload = '{"val":"' + val + '"}'
+            topic = 'statusCurrentHeatingCoolingState'
             str_to_publish = self.topic_pub + self.client.homekit_name + '/' + device['name'] + '/' + topic
             self.client.publish(str_to_publish, payload)
 
             val = device['last_config'].get('temp')
-            payload = '{"val":' + val + '}'
+            payload = '{"val":"' + val + '"}'
             topic = 'statusTargetTemperature'
             str_to_publish = self.topic_pub + self.client.homekit_name + '/' + device['name'] + '/' + topic
             self.client.publish(str_to_publish, payload)

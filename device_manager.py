@@ -34,7 +34,7 @@ class DeviceManager:
         return filter(lambda device: device['type'] == device_type and not self.is_group_device(device), self.devices)
 
 
-    def update_simple_device(self, device, args):
+    def update_simple_device(self, device, args, save_devices):
         device_type = device['type']
         #works for MQTT or XBee device according to the 'mqtt' setting.
         if 'protocol' in device:
@@ -57,7 +57,8 @@ class DeviceManager:
         for k, v in device['last_config'].items():
             if k not in args:
                 args[k] = v
-        device['last_config'] = args
+        if save_devices:
+            device['last_config'] = args
 
 
     def update_scheduler(self, scheduler):
@@ -112,7 +113,7 @@ class DeviceManager:
                 self.update_simple_device(simple_device, args)
             device['last_config'] = args
         else:
-            self.update_simple_device(device, args)
+            self.update_simple_device(device, args, save_devices)
         if save_devices:
             self.save_devices()
         return device

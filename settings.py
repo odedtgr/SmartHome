@@ -1,12 +1,12 @@
 class Settings:
-    release = "https://cdn.rawgit.com/odedtgr/SmartHome/1.6/static/"
+    #release = "https://cdn.rawgit.com/odedtgr/SmartHome/1.6/static/"
+    release = ""
 
     HOME_NAME = "Tagar"
     users = {"Oded":"Stamir47",
              "Maya":"Stamir47"}
     HOST = '0.0.0.0'
     PORT = 8000
-    DEVICES_FILENAME = "devices.txt"
     SCHEDULER_FILENAME = "scheduler.txt"
     DEBUG = True
     scheduler_on = True
@@ -16,15 +16,14 @@ class Settings:
 
     THING_SPEAK_KEY = 'GJR2UBQ6G8UDCKQL'
 
-    MQTT_BROKER = 'localhost'
-    MQTT_TOPIC_SUB = "HomeWise/#"
-    MQTT_TOPIC_PUB = "HomeWise/out"
+    MQTT_BROKER = '127.0.0.1'
+    MQTT_TOPIC_SUB = "HomeWise/from/"
+    MQTT_TOPIC_PUB = "HomeWise/to/"
+    HOMEKIT_NAME = "homekit"
 
     MQTT_PORT = 1883
 
-    RADIO_CLASS	= 'Radio'
     FRAME_ID = 'A'
-    GROUP_DEVICES = ['ALL SHUTTERS']
 
     DEVICES = [
        # {
@@ -37,75 +36,77 @@ class Settings:
        #  },
 	    {
             'id':           0,
-            'name': 	    'Living Room Shutter',
-            'type': 	    'shutterNew',
+            'name': 	    'Living room window',
+            'type': 	    'ShutterNew',
             'address':      '\x00\x05',
             'number':       1,
             'last_config':  {'mode': '100'}
         },
 	    {
             'id':           1,
-            'name': 	    'Bedroom Shutter',
-            'type': 	    'shutterNew',
+            'name': 	    'Bedroom window',
+            'type': 	    'ShutterNew',
             'address':      '\x00\x04',
             'number':       1,
             'last_config':  {'mode': '100'}
         },
         {
             'id':           2,
-            'name': 	    'Living Air Conditioner',
-            'type': 	    'air_conditioner',
+            'name': 	    'Living room Air Conditioner',
+            'type': 	    'AirConditioner',
             'address':      '\x00\x06',
             'number':       1,
-            'last_config':  {'fan': '1', 'on_off': 'false', 'temp': '25', 'mode': 'cool'}
+            'last_config':  {'fan': '1', 'device_on': 'false', 'temp': '25', 'mode': 'cool', 'on_off-changed':False}
         },
         {   'id':           3,
             'name': 	    'Rooms Air Conditioner',
-            'type': 	    'air_conditioner',
+            'type': 	    'AirConditioner',
             'address':      '\x00\x06',
             'number':       2,
-            'last_config':  {'fan': '1', 'on_off': 'false', 'temp': '25', 'mode': 'cool'}
+            'last_config':  {'fan': '1', 'device_on': 'false', 'temp': '25', 'mode': 'cool', 'on_off-changed':False}
         },
         {
             'id':           4,
             'name': 	    'Water Heater',
-            'type': 	    'boiler',
+            'type': 	    'Boiler',
             'address':      '\x00\x07',
             'number':       1,
-            'last_config':  {'mode': '0'}
+            'last_config':  {'mode': '0', 'Temp': '0'}
         },
         {
             'id': 5,
             'name': 'Water temperature',
-            'type': 'boiler_temperature',
+            'type': 'BoilerTemperature',
+            'show_in_devices': False,
             'address': '\x00\x07',
             'number': 2,
-            'last_config': {'Temp': 0}
+            'last_config': {'Temp': '0'}
         },
         {
             'id':           6,
-            'name': 	    'Twins room Shutter',
-            'type': 	    'shutterNew',
+            'name': 	    'Twins room window',
+            'type': 	    'ShutterNew',
             'address':      '\x00\x02',
             'number':       1,
             'last_config':  {'mode': '100'}
         },
         {
             'id':           7,
-            'name': 	    'Test Light',
-            'type': 	    'light',
+            'name': 	    'TV Light',
+            'type': 	    'Light',
             'protocol':     'mqtt',
-            'address':      'test_light',
+            'address':      'WiFiSwitch-9f-d6-53',
             'number':       1,
             'last_config':  {'device_on': 'false'}
         },
         {
             'id': 8,
             'name': 'TV',
-            'show_in_devices' : 'false',
-            'type': 'samsung_tv',
+            'show_in_devices' : False,
+            'type': 'SamsungTv',
             'protocol': 'api',
             'address': '192.168.1.40',
+            'mac':'5C:49:7D:1C:E3:BB',
             'number': 1,
             'last_config': {'key': 'KEY_POWER'}
         }
@@ -120,11 +121,11 @@ class Settings:
         {'name' : 'Close living room',
             'tasks':[
                 {
-                'name': 'Living Room Shutter',
+                'name': 'Living room window',
                 'args' : {'mode' : '0'}
                 },
                 {
-                'name': 'Test Light',
+                'name': 'TV Light',
                 'args': {'device_on': 'false'}
                 },
                 {
@@ -133,5 +134,22 @@ class Settings:
                 }
 
             ]
-        }
+        },
+        {'name': 'Open all windows',
+             'tasks': [
+                {
+                 'name': 'Living Room Shutter',
+                 'args': {'mode': '100'}
+                },
+                {
+                 'name': 'Bedroom window',
+                 'args': {'mode': '100'}
+                },
+                {
+                 'name': 'Twins room window',
+                 'args': {'mode': '100'}
+                }
+
+            ]
+         }
     ]

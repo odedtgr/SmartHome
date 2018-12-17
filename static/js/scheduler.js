@@ -64,12 +64,12 @@ $('button.save').on('click', function() {
         // insert config
         device_row = $(this).find("div[device-type]");
         device_type = device_row.attr('device-type');
-        if (device_type === 'shutter' || device_type === 'shutterNew')
-            attr = shutter_attr(device_row);
-        else if(device_type === 'boiler')
-            attr = boiler_attr(device_row);
-        else if(device_type === 'air_conditioner')
-            attr = air_conditioner_attr(device_row, false);
+        if (device_type === 'Shutter' || device_type === 'ShutterNew')
+            attr = Shutter_attr(device_row);
+        else if(device_type === 'Boiler')
+            attr = Boiler_attr(device_row);
+        else if(device_type === 'AirConditioner')
+            attr = AirConditioner_attr(device_row, false);
         curr_item['config'] = attr;
 
         scheduler.push(curr_item);

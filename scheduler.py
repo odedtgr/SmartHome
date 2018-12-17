@@ -16,14 +16,9 @@ class Scheduler:
                 for task in scheduler:
                     if task['hour'] == curr_hour and days[now.weekday()] in task['day']:
                         logger.info("[{}] - Executing Schedule task...{}".format(str(datetime.datetime.now()), task))
-                        device_type=device_manager.devices[task['device_id']]['type']
-                        if device_type == 'air_conditioner':
-                            ac_on = device_manager.devices[task['device_id']]['last_config']['on_off']=='true'
-                            if task['config']['on_off']!=ac_on:
-                                task['config']['on_off-changed'] = unicode('true', "utf-8")
-                            else:
-                                task['config']['on_off-changed'] = unicode('false', "utf-8")
-                        device_manager.update_device(task['device_id'], task['config'], False)
+                        device = device_manager.get_device_by_id(task['device_id'])
+                        args = dict(task['config']) #create a new dict and not a pointer to the same object
+                        device.run_scheduler_task(args)
 
             next_tasks_hours = [h for h in hours if h > curr_hour]
             next_loop_time = next_tasks_hours[0] if len(next_tasks_hours) > 0 else hours[0]

@@ -1,13 +1,12 @@
 import serial, sys
-import datetime
 from xbee import XBee
 from thing_speak import *
 from pushover import *
 
 
-def calc_ac_message(args, logger):
+def calc_ac_message(args):
     message = '111000' # prefix
-    message += ('01' if args['on_off-changed'] == 'true' else '10') # on_off
+    message += ('01' if args['on_off-changed'] == True else '10') # on_off
     message += ('101001' if args['mode'] == 'cool' else '100110') # mode
     fan_options = {'1': '1010',
                    '2': '1001',
@@ -42,68 +41,48 @@ def calc_ac_message(args, logger):
     while len(message) > 0:
         data += chr(int(message[:8],2))
         message = message[8:]
-
-    #logger.info("data={}".format(data))
     return data
 
 
-
-class Radio:
-    def __init__(self):
+class Xbee:
+    def __init__(self, device_manager):
         self.serial_port = serial.Serial('/dev/ttyAMA0', 19200)
         self.xbee = XBee(self.serial_port, callback=self.handle_received_data)
+        device_manager.add_xbee(self)
+        self.device_manager = device_manager
 
 
     def handle_received_data(self, data):
         if 'source_addr' in data and 'rf_data' in data:
-            device = self.status_updater.get_device_by_address(data['source_addr'], ord(data['rf_data'][0]))
+            device = self.get_device_by_address(data['source_addr'], ord(data['rf_data'][0]))
             rf_data = '\\'.join(x.encode('hex') for x in data['rf_data'])
-            print "[{}] - Receiving data from {}: {}, rssi:{} dBm".format(datetime.datetime.now(), device['name'], rf_data, -ord(data['rssi']))
+
             if device is not None:
-                if device['type'] == 'shutter':
-                    status = {'mode' : str(ord(data['rf_data'][1]))}
-                if device['type'] == 'shutterNew':
-                    status = {'mode' : str(ord(data['rf_data'][1]))}
+                print "[{}] - Receiving data from {}: {}, rssi:{} dBm".format(datetime.datetime.now(), device.name,
+                    rf_data, -ord(data['rssi']))
+                device.handle_message_from_device(data)
+
                 if device['type'] == 'temperature':
                     temperature = float(ord(data['rf_data'][1])*256+ord(data['rf_data'][2]))/10
                     rh = float(ord(data['rf_data'][3])*256+ord(data['rf_data'][4]))/10
                     status = {'Temp' : str(temperature), 'Rh' : str(rh)}
                     ThingSpeak_update_DHT22(temperature, rh)
-                if device['type'] == 'boiler':
-                    now = datetime.datetime.now()
-                    date = datetime.datetime.today().strftime('%Y-%m-%d')
-                    curr_hour = "{}:{}".format(str(now.hour).zfill(2), str(now.minute).zfill(2))
-                    mode = ord(data['rf_data'][1])
-                    status = {'mode' : str(mode),
-                              'time' : curr_hour,
-                              'date' : date
-                              }
-                if device['type'] == 'boiler_temperature':
-                    temperature = float((ord(data['rf_data'][2]) << 8) | (ord(data['rf_data'][1]) << 0)) / float(256)
-                    if temperature > 255:
-                        return
-                    device = self.status_updater.get_device_by_address(data['source_addr'], 1)
-                    status = {'Temp': str(temperature)}
-                    ThingSpeak_update_DS18B20(temperature)
-                if device['type'] == 'air_conditioner':
-                    status = {'on_off' : ('false' if data['rf_data'][1] == '\x01' else 'true') }
-                if status is not None:
-                    self.status_updater.update_device_status(device, status)
+
 
     def close(self):
         self.xbee.halt()
         self.serial_port.close()
 
 
-    def update_shutter(self, addr, device_number, args):
-        shutter_options = {'100': '\x01',
+    def update_Shutter(self, addr, device_number, args):
+        Shutter_options = {'100': '\x01',
                            '0': '\x02',
                            'pause': '\x03',
                            '25': '\x04',
                            '50': '\x05',
                            '75': '\x06',
                            }
-        data = shutter_options[args['mode']]
+        data = Shutter_options[args['mode']]
         self.xbee.send('tx',
                        frame_id='A',
                        dest_addr=addr,
@@ -111,17 +90,28 @@ class Radio:
                        data=(chr(device_number)+data))
 
 
-    def update_shutterNew(self, addr, device_number, args):
-        data = "\x02" if args['mode'] == 'pause' else ("\x01" + chr(int(args['mode'])))
+    def update_ShutterNew(self, addr, device_number, args):
+        if args['mode'] == 'pause':
+            data = "\x02"
+        elif args['mode'] == 'get_device_status':
+            data = "\x00"
+        else:
+            data = "\x01" + chr(int(args['mode']))
+
         self.xbee.send('tx',
                        frame_id='A',
                        dest_addr=addr,
                        options='\x00',
                        data=(chr(device_number)+data))
 
-    def update_boiler(self, addr, device_number, args):
+    def update_Boiler(self, addr, device_number, args):
         if(args.has_key('mode')):
-            data = chr(int(args['mode']))
+            if args['mode'] == 'get_device_status':
+                data = "\x00"  #get status
+            elif args['mode'] == '6':
+                data = "\x01" + chr(int(args['mode'])) + chr(int(args['target_temp']))
+            else:
+                data = "\x01" + chr(int(args['mode'])) #set status
             self.xbee.send('tx',
                            frame_id='A',
                            dest_addr=addr,
@@ -131,45 +121,32 @@ class Radio:
     def update_temperature(self, addr, device_number, args):
         data = 0
 
-    def update_boiler_temperature(self, addr, device_number, args):
-        data = 0
+    def update_BoilerTemperature(self, addr, device_number, args):
+        if (args.has_key('mode')):
+            if args['mode'] == 'get_device_status':
+                data = "\x00"  # get status
+            self.xbee.send('tx',
+                           frame_id='A',
+                           dest_addr=addr,
+                           options='\x00',
+                           data=(chr(device_number) + data))
 
-    def update_air_conditioner(self, addr, device_number, args):
-        data = calc_ac_message(args, self.logger)
+    def update_AirConditioner(self, addr, device_number, args):
+        if args['mode'] == 'get_device_status':
+            command = "\x00"
+        else:
+            command = "\x01"
+        data = calc_ac_message(args)
+
         self.xbee.send('tx',
                        frame_id='A',
                        dest_addr=addr,
                        options='\x00',
-                       data=(chr(device_number)+chr(1)+data))
+                       data=(chr(device_number)+command+data))
 
 
-    def set_status_updater(self, status_updater):
-        self.status_updater = status_updater
-
-
-    def set_logger(self, logger):
-        self.logger = logger
-
-
-class DummyRadio:
-    def __init__(self):
-        print "Starting DummyRadio..."
-
-    def close(self):
-        self.logger.info("Bye Bye")
-
-    def update_shutter(self, addr, device_number, args):
-        self.logger.info("shutter={},{} args={}".format(addr, device_number, args))
-
-    def update_shutterNew(self, addr, device_number, args):
-        self.logger.info("shutterNew={},{} args={}".format(addr, device_number, args))
-
-    def update_air_conditioner(self, addr, device_number, args):
-        self.logger.info("air conditioner={},{}, args={}".format(addr, device_number, args))
-        calc_ac_message(args, self.logger)
-
-    def set_status_updater(self, status_updater):
-        self.status_updater = status_updater
-
-    def set_logger(self, logger):
-        self.logger = logger
+    def get_device_by_address(self, address, number):
+        for device in self.device_manager.devices_list:
+            if device.address == address and device.number == number:
+                return device
+        return None

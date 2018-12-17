@@ -13,30 +13,31 @@ $(document).on(
 $(function() {
 });
 
-function shutter_attr(device_row) {
+function Shutter_attr(device_row) {
     attributes = new Object();
     attributes['mode'] = device_row.find('.btn-group').find('button.active').attr('val');
     return attributes;
 }
 
 
-function boiler_attr(device_row) {
+function Boiler_attr(device_row) {
     attributes = new Object();
     attributes['mode'] = device_row.find('.btn-group').find('button.active').attr('val');
+    attributes['target_temp'] = device_row.find('select :selected').val();
     return attributes;
 }
 
-function air_conditioner_attr(device_row, on_off_changed) {
+function AirConditioner_attr(device_row, on_off_changed) {
     attributes = new Object();
     attributes['on_off-changed'] = on_off_changed;
-    attributes['on_off'] = device_row.find('.deviceOn').prop('checked');
+    attributes['device_on'] = device_row.find('.deviceOn').prop('checked');
     attributes['fan'] = device_row.find(".btn-group[val='fan'] button.active").attr('val');
     attributes['temp'] = device_row.find('select :selected').val();
     attributes['mode'] = device_row.find(".btn-group[val='mode'] button.active").attr('val');
     return attributes;
 }
 
-function light_attr(device_row, on_off_changed) {
+function Light_attr(device_row, on_off_changed) {
     attributes = new Object();
     attributes['device_on'] = !device_row.find('.deviceOn').prop('checked');
     return attributes;
@@ -86,8 +87,8 @@ namespace = ''; // change to an empty string to use the global namespace
 var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
 
 
-function update_device_websoc(device_id, attributes) {
-    socket.emit('my broadcast event', {device_id: device_id, data: attributes}, callback = ack);
+function update_device_websoc(device_name, attributes) {
+    socket.emit('my broadcast event', {device_name: device_name, data: attributes}, callback = ack);
 }
 
 function ack(){
@@ -96,7 +97,7 @@ function ack(){
 
 // websocket event handler for server sent data
 socket.on('update_device', function(msg) {
-    update_device_gui(msg.device,msg.status)
+    update_device_gui(msg.status, msg.device_id, msg.device_type)
 });
 
 function displayErrorMessage(errorMessage) {

@@ -40,6 +40,7 @@ $(document).ready(function()
         loadThingSpeakChannel(channelIndex,channelKeys[channelIndex].channelNumber,channelKeys[channelIndex].key,channelKeys[channelIndex].fieldList);
 
     }
+    chart.reflow();
 
     // load the most recent 8000 points (fast initial load) from a ThingSpeak channel into a data[] array and return the data[] array
     function loadThingSpeakChannel(sentChannelIndex,channelNumber,key,sentFieldList) {

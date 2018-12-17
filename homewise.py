@@ -9,6 +9,7 @@ from device_manager import *
 from scheduler import Scheduler
 from settings import *
 from pushover import *
+from radio import Xbee
 from MQTT import *
 from api_manager import *
 from scenario_manager import *
@@ -28,16 +29,16 @@ def homepage():
 def devices():
     if not is_loggedin():
         return redirect(url_for('login', return_to='devices'))
-    the_devices = get_device_manager().devices
-    return render_template('devices.html', devices=the_devices, show_device_label=True, show_status=True, scheduler_on=Settings.scheduler_on, release=Settings.release)
+    the_devices = get_device_manager().devices_list
+    return render_template('devices.html', devices=the_devices, scheduler_on=Settings.scheduler_on, release=Settings.release, context='devices')
 
 @app.route("/scheduler")
 def scheduler():
     if not is_loggedin():
         return redirect(url_for('login', return_to='scheduler'))
-    the_devices = get_device_manager().simple_devices()
+    the_devices = get_device_manager().devices_list
     the_scheduler = get_device_manager().scheduler
-    return render_template('scheduler.html', devices=the_devices, show_device_label=True, show_status=False, scheduler=the_scheduler, release=Settings.release)
+    return render_template('scheduler.html', devices=the_devices, scheduler=the_scheduler, release=Settings.release, context='scheduler')
 
 @app.route("/scenarios")
 def scenarios():
@@ -51,8 +52,12 @@ def scenarios():
 def update_device_websoc(message):
     if not is_loggedin():
         return redirect(url_for('login'))
-    device_manager.update_device(int(message['device_id']), message['data'], True)
+    deviceName = str(message['device_name'])
+    device = device_manager.get_device_by_name(deviceName)
+    device.set_config(message['data'])
 
+
+#TODO this is all wrong. also javascript
 @app.route("/update_device/<int:device_id>", methods=['GET', 'POST'])
 def update_device(device_id):
     if not is_loggedin():
@@ -90,17 +95,16 @@ def execute_scenario(scenario_name):
 def device_config_panel(device_id, schedule_index):
     if not is_loggedin():
         return json.dumps({'succeeded': False, 'message': 'Not Logged In.'})
-    device = get_device_manager().get_device_by_id(device_id).copy()
+    device = get_device_manager().get_device_by_id(device_id)
     the_scheduler = get_device_manager().scheduler
+    original_config = dict(device.last_config) #explicit copy of dict, not reference to object
     if schedule_index < len(the_scheduler) and the_scheduler[schedule_index]['device_id'] == device_id:
-        device['last_config'] = the_scheduler[schedule_index]['config']
+        device.last_config = the_scheduler[schedule_index]['config']
     else:
-        device['last_config'] = dict()
-    if(device['type']=='boiler'):
-        return render_template('{}_scheduler.html'.format(device['type']), device=device, show_device_label=False, release=Settings.release)
-    else:
-        return render_template('{}.html'.format(device['type']), device=device, show_device_label=False, release=Settings.release)
-
+        device.last_config = dict()
+    rendered_device =  device.render_scheduler_template(Settings.release)
+    device.last_config = original_config
+    return rendered_device
 
 @app.route("/new_schedule_item_panel/<int:schedule_index>", methods=['GET', 'POST'])
 def new_schedule_item_panel(schedule_index):
@@ -160,17 +164,15 @@ def get_device_manager():
 app.secret_key = os.urandom(24)
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.INFO)
-radio = getattr(__import__('radio'), Settings.RADIO_CLASS)()
 device_manager = DeviceManager(Settings.DEVICES,
                                Settings.SCHEDULER,
-                               Settings.GROUP_DEVICES,
-                               Settings.DEVICES_FILENAME,
                                Settings.SCHEDULER_FILENAME,
                                app.logger,
-                               radio,
                                socketio)
-mqtt = MQTT(Settings.MQTT_BROKER, Settings.MQTT_PORT, Settings.MQTT_TOPIC_SUB, Settings.MQTT_TOPIC_PUB, device_manager, app.logger)
+xbee = Xbee(device_manager)
+mqtt = MQTT(Settings.MQTT_BROKER, Settings.MQTT_PORT, Settings.MQTT_TOPIC_SUB, Settings.MQTT_TOPIC_PUB, Settings.HOMEKIT_NAME, device_manager, app.logger)
 api_manager = API_Manager(device_manager)
+device_manager.get_devices_status() #get current status from able devices
 scheduler = Scheduler(device_manager.scheduler, Settings, device_manager, app.logger)
 scenario_manager = Scenario_Manager(device_manager, Settings.SCENARIOS)
 
@@ -183,4 +185,4 @@ if __name__ == "__main__":
     except :
         pushover_update("HomeWise", "Allready runnung", "0")
         os._exit(1)
-radio.close()
+xbee.close()

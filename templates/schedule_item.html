@@ -4,7 +4,7 @@
   <div class="form-group col-xs-12 col-lg-3">
     <select class="form-control device" schedule_index="{{ schedule_index }}">
       {% for device in devices %}
-            <option value="{{ device.id }}" {{ 'selected' if device.id == schedule_item.device_id }}>{{ device.name }}</option>
+            <option value="{{ device.id }}" {{'selected' if device.id == schedule_item.device_id }}>{{ device.name }}</option>
       {% endfor %}
     </select>
   </div>

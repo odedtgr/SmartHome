@@ -1,14 +1,13 @@
 <div id="{{device.id}}" class="row" device-name="{{ device.name }}" device-type="{{device.type}}">
-    {% if show_device_label %}
+    {% if context == 'devices'%}
         <div class="col-xs-12 col-lg-2">
             {{ device.name }}
         </div>
     {% endif %}
 
-    <div class="col-xs-10 col-lg-10">
+    <div class="col-xs-10 col-lg-6">
         <div class="btn-group" role="group" aria-label="Mode" val="mode">
             <button type="button" class="btn btn-primary {{'active' if device.last_config['mode'] == '100'}}" aria-label="100" val="100">
-                <!--<img src="img/arrow-up1.png" width="18" height="18">-->
                 <i class="fa fa-arrow-up" aria-hidden="true"></i>
             </button>
             <button type="button" class="btn fraction btn-primary {{'active' if device.last_config['mode'] == '75'}}" aria-label="75" val="75"><sup>3</sup>&frasl;<sub>4</sub></button>
@@ -21,13 +20,11 @@
                 <i class="fa fa-stop" aria-hidden="true"></i>
             </button>
         </div>
-
     </div>
-
-    {% if context == 'devices'%}
-        <div class="col-xs-2 col-lg-1">
-            <div class="status">{{"{}% Open".format(device.last_config['mode']) if device.last_config['mode'] not in ['0', '25', '50', '75', '100', 'pause']}}</div>
-        </div>
+    {% if context == 'devices' %}
+    <div class="col-xs-2 col-lg-6">
+        <div class="status">{{"{}% Open".format(device.last_config['mode']) if device.last_config['mode'] not in ['0', '25', '50', '75', '100', 'pause']}}</div>
+    </div>
     {% endif %}
 
     <!--
@@ -39,4 +36,5 @@
         </div>
     </div>
     -->
+
 </div>

@@ -1,0 +1,94 @@
+<div id="{{device.id}}" class="row" device-name="{{ device.name }}" device-type="{{device.type}}">
+    {% if context == 'devices'%}
+    <div class="col-xs-5 col-lg-2">
+        {{ device.name }}
+    </div>
+    {% endif %}
+
+    {% if context == 'devices'%}
+    <div class="col-xs-7 col-lg-12">
+        <script>
+            //Display the time the water heater was on, but only if it was today.
+            var today = new Date();
+            today = today.getFullYear() + '-' + ('0' + (today.getMonth()+1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+            var yesterday = new Date();
+            yesterday.setDate(yesterday.getDate()-1);
+            yesterday = yesterday.getFullYear() + '-' + ('0' + (yesterday.getMonth()+1)).slice(-2) + '-' + ('0' + yesterday.getDate()).slice(-2);
+            var boiler_date = '{{device.last_config['date']}}'
+            var mode = {{device.last_config['mode']}}
+            if (today.localeCompare(boiler_date)==0)
+            {
+                if (mode == 0){
+                    document.write('{{"Last on at {}".format(device.last_config['time'])}}')
+                }else{
+                    document.write('{{"Started on {}".format(device.last_config['time'])}}')
+                }
+            }
+            else if (yesterday.localeCompare(boiler_date)==0)
+            {
+                if (mode == 0){
+                    document.write('{{"Last on yesterday at {}".format(device.last_config['time'])}}')
+                }
+            }
+        </script>
+    </div>
+    {% endif %}
+
+    <div class="col-xs-12 col-lg-12"></div>
+
+    <div class="col-xs-6 col-lg-2">
+        <div class="btn-group" role="group" aria-label="Mode" val="mode">
+            <button type="button" class="btn btn-primary {{'active' if device.last_config['mode'] == '0'}}" aria-label="0" val="0">Off</button>
+            <button type="button" class="btn btn-alert {{'active' if (device.last_config['mode'] == '3'  or device.last_config['mode'] == '4' or device.last_config['mode'] == '5' or device.last_config['mode'] == '6')}}" aria-label="4" val="4">Auto</button>
+            <button type="button" class="btn btn-alert {{'active' if (device.last_config['mode'] == '1' or device.last_config['mode'] == '2')}}" aria-label="2" val="2">On</button>
+        </div>
+    </div>
+
+    {% if context == 'devices'%}
+    <div class="col-xs-3 col-lg-1">
+        <i class="fa fa-thermometer-full  fa-lg"></i>
+        <i class="T">{{" {}".format(device.last_config['Temp'])}}</i>
+    </div>
+
+    <div class="col-xs-3 col-lg-1">
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#boiler_stats" ignore="true">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div id="boiler_stats" class="collapse {{'in' if (device.last_config['visible'] == 'false')}}">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="{{release}}js/highstock.min.js"></script>
+        <!--<script src="js/highcharts.js?v=6"></script>-->
+        <script src="{{release}}js/highcharts.min.js?id=1234"></script>
+
+        <div class="col-xs-12 col-lg-12">
+            <div id="chart-container" style="height: 400px;">
+                <br>Loading...<br>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if context == 'scheduler'%}
+    <div class="col-xs-5 col-lg-1 selectContainer">
+        <div class="input-group target-temp">
+            <select name="temp" class="form-control" value="50">
+                <option value="Off" {{'selected' if device.last_config['target_temp'] == 'Off'}}>Off</option>
+                <option value="50" {{'selected' if device.last_config['target_temp'] == '50'}}>50</option>
+                <option value="55" {{'selected' if device.last_config['target_temp'] == '55'}}>55</option>
+                <option value="60" {{'selected' if device.last_config['target_temp'] == '60'}}>60</option>
+                <option value="65" {{'selected' if device.last_config['target_temp'] == '65'}}>65</option>
+                <option value="70" {{'selected' if device.last_config['target_temp'] == '70'}}>70</option>
+            </select>
+            <span class="input-group-addon">
+                <i class="fa fa-thermometer-full  fa-lg"></i>
+            </span>
+        </div>
+    </div>
+    {% endif %}
+
+
+</div>
+
+    
+

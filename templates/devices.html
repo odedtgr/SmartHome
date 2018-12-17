@@ -6,12 +6,8 @@
     {% include "menu.html" %}
 
     {% for device in devices %}
-            {% if 'show_in_devices' in device %}
-                {% if 'show_in_devices'=='true' %}
+            {% if device.show_in_devices %}
                     {% include "{}.html".format(device.type) %}
-                {% endif %}
-            {% else %}
-                {% include "{}.html".format(device.type) %}
             {% endif %}
     {% endfor %}
 

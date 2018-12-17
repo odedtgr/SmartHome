@@ -1,0 +1,60 @@
+<div id="{{device.id}}" class="row" device-name="{{ device.name }}" device-type="{{device.type}}">
+    {% if context == 'devices'%}
+        <div class="col-xs-12 col-lg-2">
+            {{ device.name }}
+        </div>
+    {% endif %}
+
+    <div  class="col-xs-5 col-lg-1 toggle_div">
+        <input class="toggle deviceOn" id="toggle-event" type="checkbox" data-toggle="toggle" data-onstyle="danger" data-offstyle="primary" val="device_on" hidden {{'checked' if (device.last_config['device_on'] == 'true' or device.last_config['device_on'] == True)}}>
+    </div>
+
+    <div class="col-xs-7 col-lg-2">
+        <div class="btn-group pull-right" role="group" aria-label="Fan" val="fan">
+            <button type="button" class="btn btn-default {{'active' if device.last_config['fan'] == '1'}}" val="1">1</button>
+            <button type="button" class="btn btn-default {{'active' if device.last_config['fan'] == '2'}}" val="2">2</button>
+            <button type="button" class="btn btn-default {{'active' if device.last_config['fan'] == '3'}}" val="3">3</button>
+            <button type="button" class="btn btn-default {{'active' if device.last_config['fan'] == 'A'}}" val="A">A</button>
+        </div>
+    </div>
+
+
+	<div class="col-xs-12 col-lg-1" style="height:10px;"></div>
+
+    <div class="col-xs-7 col-lg-1 selectContainer">
+        <div class="input-group ac-temp">
+            <select name="temp" class="form-control" value="18">
+                <option value="16" {{'selected' if device.last_config['temp'] == '16'}}>16</option>
+                <option value="17" {{'selected' if device.last_config['temp'] == '17'}}>17</option>
+                <option value="18" {{'selected' if device.last_config['temp'] == '18'}}>18</option>
+                <option value="19" {{'selected' if device.last_config['temp'] == '19'}}>19</option>
+                <option value="20" {{'selected' if device.last_config['temp'] == '20'}}>20</option>
+                <option value="21" {{'selected' if device.last_config['temp'] == '21'}}>21</option>
+                <option value="22" {{'selected' if device.last_config['temp'] == '22'}}>22</option>
+                <option value="23" {{'selected' if device.last_config['temp'] == '23'}}>23</option>
+                <option value="24" {{'selected' if device.last_config['temp'] == '24'}}>24</option>
+                <option value="25" {{'selected' if device.last_config['temp'] == '25'}}>25</option>
+                <option value="26" {{'selected' if device.last_config['temp'] == '26'}}>26</option>
+                <option value="27" {{'selected' if device.last_config['temp'] == '27'}}>27</option>
+                <option value="28" {{'selected' if device.last_config['temp'] == '28'}}>28</option>
+                <option value="29" {{'selected' if device.last_config['temp'] == '29'}}>29</option>
+                <option value="30" {{'selected' if device.last_config['temp'] == '30'}}>30</option>
+            </select>
+            <span class="input-group-addon">
+                <i class="fa fa-thermometer-full  fa-lg"></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="col-xs-5 col-lg-2">
+        <div class="btn-group pull-right" role="group" aria-label="Mode" val="mode">
+            <button type="button" class="btn btn-default {{'active' if device.last_config['mode'] == 'cool'}}" val="cool">
+                <i class="fa fa-snowflake-o fa-lg" aria-hidden="true" {{'style=color:#337ab7' if device.last_config['mode'] == 'cool'}} ></i>
+            </button>
+            <button type="button" class="btn btn-default {{'active' if device.last_config['mode'] == 'heat'}}" val="heat">
+                <i class="fa fa-sun-o fa-lg" aria-hidden="true" {{'style=color:red' if device.last_config['mode'] == 'heat'}}></i>
+            </button>
+        </div>
+    </div>
+</div>
+

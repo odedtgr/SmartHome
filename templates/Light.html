@@ -1,0 +1,12 @@
+<div id="{{device.id}}" class="row" device-name="{{ device.name }}" device-type="{{device.type}}">
+    {% if context == 'devices'%}
+        <div class="col-xs-12 col-lg-2">
+            {{ device.name }}
+        </div>
+    {% endif %}
+
+    <div  class="col-xs-5 col-lg-1 toggle_div">
+        <input class="toggle deviceOn" id="toggle-event" type="checkbox" data-toggle="toggle" data-onstyle="danger" data-offstyle="primary" val="device_on" hidden {{'checked' if (device.last_config['device_on'] == 'true')}}>
+    </div>
+</div>
+
